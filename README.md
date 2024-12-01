@@ -15,6 +15,8 @@
 ### コマンド
 
 ```bash
+# 準備
+python ./src/_tool/copy.py .template.env .env
 
 # メイン実行
 python ./src/main.py
