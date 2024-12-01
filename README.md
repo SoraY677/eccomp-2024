@@ -25,7 +25,7 @@ python ./src/main.py
 
 - [問題](https://opthub.ai/ja/problems/number-place)
 - [コンペティションページ](https://opthub.ai/ja/competitions/eccomp2024)
-- [./自作ドキュメント](./doc)
+- [自作ドキュメント](./doc)
 
 ## 🌲 構成・役割
 
