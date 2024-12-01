@@ -8,8 +8,8 @@ load_dotenv()
 
 ECCOMP_API_KEY = os.getenv('ECCOMP_API_KEY')
 
-SOLVE_SINGLE_PREFIX = "single"
-SOLVE_MULTI_PREFIX = "multi"
+SOLVE_SINGLE_PREFIX = "s"
+SOLVE_MULTI_PREFIX = "m"
 
 QUESTION_MAP = {
     ### 単目的
