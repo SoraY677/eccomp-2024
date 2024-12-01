@@ -1,8 +1,6 @@
 <div align="center">
 
-# 進化計算コンペティション 2024 - セルフリゾルバ
-
----
+# 2024 年 🧭 進化計算コンペティション <br/> セルフリゾルバ
 
 公式サイト: https://opthub.ai/ja/competitions/eccomp2024
 
