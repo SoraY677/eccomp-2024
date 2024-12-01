@@ -14,18 +14,57 @@
 
 ### コマンド
 
+#### 環境変数の設定
+
 ```bash
+python ./_tool/copy.py .template.env .env
+```
 
-# メイン実行
-python ./src/main.py
+<details>
 
+<summary>環境変数の設定項目一覧</summary>
+
+|           変数名           |          概要           |                           関連リンク                            |
+| :------------------------: | :---------------------: | :-------------------------------------------------------------: |
+|       ECCOMP_API_KEY       |   OPTHUB の API キー    |                                                                 |
+| SINGLE_OBJECTIVE_1_API_KEY | 単目的部門１の API キー | https://opthub.ai/ja/competitions/eccomp2024/single-objective-1 |
+| SINGLE_OBJECTIVE_2_API_KEY | 単目的部門２の API キー | https://opthub.ai/ja/competitions/eccomp2024/single-objective-2 |
+| SINGLE_OBJECTIVE_3_API_KEY | 単目的部門３の API キー | https://opthub.ai/ja/competitions/eccomp2024/single-objective-3 |
+| MULTI_OBJECTIVE_1_API_KEY  | 多目的部門１の API キー | https://opthub.ai/ja/competitions/eccomp2024/multi-objective-1  |
+| MULTI_OBJECTIVE_2_API_KEY  | 多目的部門２の API キー | https://opthub.ai/ja/competitions/eccomp2024/multi-objective-2  |
+| MULTI_OBJECTIVE_3_API_KEY  | 多目的部門３の API キー | https://opthub.ai/ja/competitions/eccomp2024/multi-objective-3  |
+
+</details>
+
+#### メイン実行
+
+```bash
+python ./src/main.py {questionId}
+```
+
+##### 引数一覧
+
+- questionId
+  - `s-1`: 単目的部門-1
+  - `s-2`: 単目的部門-2
+  - `s-3`: 単目的部門-3
+  - `m-1`: 多目的部門-1
+  - `m-2`: 多目的部門-2
+  - `m-3`: 多目的部門-3
+  - `x-1`: モック
+
+#### その他
+
+```bash
+# コードフォーマット
+yapf -i --recursive .
 ```
 
 ## 📕 ドキュメント一覧
 
 - [問題](https://opthub.ai/ja/problems/number-place)
 - [コンペティションページ](https://opthub.ai/ja/competitions/eccomp2024)
-- [./自作ドキュメント](./doc)
+- [自作ドキュメント](./doc)
 
 ## 🌲 構成・役割
 
