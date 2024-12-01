@@ -1,0 +1,1 @@
+RESULT_STATUS_ERROR = "error"
