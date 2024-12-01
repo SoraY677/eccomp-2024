@@ -50,7 +50,6 @@ def _common(text, level):
         text (string): ログ出力テキスト
         level (string): ログレベル 
     """
-    print(level)  
     func = _log_func[level]
     if func is None:
         sys.exit(1)
