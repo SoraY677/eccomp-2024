@@ -36,10 +36,17 @@ python ./_tool/copy.py .template.env .env
 
 </details>
 
-##### メイン実行
+#### メイン実行
 
 ```bash
 python ./src/main.py
+```
+
+#### その他
+
+```bash
+# コードフォーマット
+yapf -i --recursive .
 ```
 
 ## 📕 ドキュメント一覧

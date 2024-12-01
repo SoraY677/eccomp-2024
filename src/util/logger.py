@@ -12,6 +12,7 @@ FORMAT = "[%(filename)s:%(lineno)d]\t%(levelname)s\t%(asctime)s\t %(message)s"
 _logger = None
 _log_func = {}
 
+
 def init(dirpath=None, level=logging.DEBUG):
     """初期化
 
@@ -32,7 +33,7 @@ def init(dirpath=None, level=logging.DEBUG):
     handler.setFormatter(logging.Formatter(FORMAT))
     _logger.addHandler(handler)
     _logger.setLevel(level)
-    
+
     global _log_func
     _log_func = {
         logging.DEBUG: _logger.debug,
@@ -40,8 +41,9 @@ def init(dirpath=None, level=logging.DEBUG):
         logging.WARN: _logger.warning,
         logging.ERROR: _logger.error
     }
-    
+
     return filepath
+
 
 def _common(text, level):
     """ログ出力用共通関数
@@ -55,6 +57,7 @@ def _common(text, level):
         sys.exit(1)
     func(text, stacklevel=3)
 
+
 def debug(text):
     """debug出力
 
@@ -63,6 +66,7 @@ def debug(text):
     """
     _common(text, logging.DEBUG)
 
+
 def info(text):
     """info出力
 
@@ -70,6 +74,7 @@ def info(text):
         text (string): ログ出力テキスト
     """
     _common(text, logging.INFO)
+
 
 def warn(text):
     """warn出力
@@ -80,6 +85,7 @@ def warn(text):
     _common(text, logging.WARN)
     print('[WARN]', text)
 
+
 def error(text):
     """error出力
 
@@ -89,12 +95,15 @@ def error(text):
     _common(text, logging.ERROR)
     print('[ERROR]', text)
 
-# 
+
+#
 # 単体テスト
 #
 if __name__ == "__main__":
     import unittest
+
     class Test(unittest.TestCase):
+
         def test_debug(self):
             """debug表示
             """
@@ -102,9 +111,7 @@ if __name__ == "__main__":
             init()
             with self.assertLogs(logger=_logger, level=logging.DEBUG) as cm:
                 debug(text)
-                self.assertEqual(cm.output, [
-                    f'DEBUG:{LOG_NAME}:{text}'
-                ])
+                self.assertEqual(cm.output, [f'DEBUG:{LOG_NAME}:{text}'])
 
         def test_info(self):
             """info表示
@@ -113,9 +120,7 @@ if __name__ == "__main__":
             init()
             with self.assertLogs(logger=_logger, level=logging.INFO) as cm:
                 info(text)
-                self.assertEqual(cm.output, [
-                    f'INFO:{LOG_NAME}:{text}'
-                ])
+                self.assertEqual(cm.output, [f'INFO:{LOG_NAME}:{text}'])
 
         def test_warn(self):
             """warn表示
@@ -124,9 +129,7 @@ if __name__ == "__main__":
             init()
             with self.assertLogs(logger=_logger, level=logging.WARN) as cm:
                 warn(text)
-                self.assertEqual(cm.output, [
-                    f'WARNING:{LOG_NAME}:{text}'
-                ])
+                self.assertEqual(cm.output, [f'WARNING:{LOG_NAME}:{text}'])
 
         def test_error(self):
             """error表示
@@ -135,9 +138,7 @@ if __name__ == "__main__":
             init()
             with self.assertLogs(logger=_logger, level=logging.ERROR) as cm:
                 error(text)
-                self.assertEqual(cm.output, [
-                    f'ERROR:{LOG_NAME}:{text}'
-                ])
+                self.assertEqual(cm.output, [f'ERROR:{LOG_NAME}:{text}'])
 
         # def test_level_select_miss(self):
         #     """レベル違いでinfoのみ表示
@@ -161,12 +162,10 @@ if __name__ == "__main__":
                 warn(text)
                 error(text)
                 self.assertEqual(cm.output, [
-                    f'DEBUG:{LOG_NAME}:{text}',
-                    f'INFO:{LOG_NAME}:{text}',
-                    f'WARNING:{LOG_NAME}:{text}',
-                    f'ERROR:{LOG_NAME}:{text}'
+                    f'DEBUG:{LOG_NAME}:{text}', f'INFO:{LOG_NAME}:{text}',
+                    f'WARNING:{LOG_NAME}:{text}', f'ERROR:{LOG_NAME}:{text}'
                 ])
-                
+
         def test_file_output(self):
             """ファイル存在確認
             """
