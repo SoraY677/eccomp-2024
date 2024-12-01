@@ -14,13 +14,32 @@
 
 ### コマンド
 
+#### 環境変数の設定
+
 ```bash
-# 準備
 python ./_tool/copy.py .template.env .env
+```
 
-# メイン実行
+<details>
+
+<summary>環境変数の設定項目一覧</summary>
+
+|           変数名           |          概要           |                           関連リンク                            |
+| :------------------------: | :---------------------: | :-------------------------------------------------------------: |
+|       ECCOMP_API_KEY       |   OPTHUB の API キー    |                                                                 |
+| SINGLE_OBJECTIVE_1_API_KEY | 単目的部門１の API キー | https://opthub.ai/ja/competitions/eccomp2024/single-objective-1 |
+| SINGLE_OBJECTIVE_2_API_KEY | 単目的部門２の API キー | https://opthub.ai/ja/competitions/eccomp2024/single-objective-2 |
+| SINGLE_OBJECTIVE_3_API_KEY | 単目的部門３の API キー | https://opthub.ai/ja/competitions/eccomp2024/single-objective-3 |
+| MULTI_OBJECTIVE_1_API_KEY  | 多目的部門１の API キー | https://opthub.ai/ja/competitions/eccomp2024/multi-objective-1  |
+| MULTI_OBJECTIVE_2_API_KEY  | 多目的部門２の API キー | https://opthub.ai/ja/competitions/eccomp2024/multi-objective-2  |
+| MULTI_OBJECTIVE_3_API_KEY  | 多目的部門３の API キー | https://opthub.ai/ja/competitions/eccomp2024/multi-objective-3  |
+
+</details>
+
+##### メイン実行
+
+```bash
 python ./src/main.py
-
 ```
 
 ## 📕 ドキュメント一覧
