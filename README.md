@@ -39,8 +39,19 @@ python ./_tool/copy.py .template.env .env
 #### メイン実行
 
 ```bash
-python ./src/main.py
+python ./src/main.py {questionId}
 ```
+
+##### 引数一覧
+
+- questionId
+  - `s-1`: 単目的部門-1
+  - `s-2`: 単目的部門-2
+  - `s-3`: 単目的部門-3
+  - `m-1`: 多目的部門-1
+  - `m-2`: 多目的部門-2
+  - `m-3`: 多目的部門-3
+  - `x-1`: モック
 
 #### その他
 
