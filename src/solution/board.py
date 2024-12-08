@@ -9,8 +9,8 @@ else:
     sys.path.append('..')
 from util import logger
 
-
 SINGLE_SIDE_NUM = 3
+
 
 class ITEM(IntEnum):
     UNKOWN = 0
@@ -37,8 +37,7 @@ class Board():
             single_size (int): 1ブロック内の1辺
         """
         self.list = [[ITEM.UNKOWN] * side_num * SINGLE_SIDE_NUM
-                for _ in range (side_num * SINGLE_SIDE_NUM)]
-
+                     for _ in range(side_num * SINGLE_SIDE_NUM)]
 
     def _is_index_validation(self, row_i, column_i):
         """テーブルのインデックス指定時のバリデーション
@@ -58,7 +57,6 @@ class Board():
             return False
         return True
 
-
     def _is_value_set_validation(self, row_i, column_i):
         """値設定
 
@@ -70,10 +68,11 @@ class Board():
             boolean: 値が設定できるか検証
         """
         if ITEM.ONE <= self.list[column_i][row_i] <= ITEM.NINE:
-            logger.error(f'value is over range:{self.list[column_i][row_i]}([{row_i}][{column_i}])')
+            logger.error(
+                f'value is over range:{self.list[column_i][row_i]}([{row_i}][{column_i}])'
+            )
             return False
         return True
-
 
     def set_item(self, row_i, column_i, value):
         """盤面の指定箇所に数値設定
@@ -86,9 +85,9 @@ class Board():
         Raises:
             None
         """
-        if self._is_index_validation(row_i,
-                                column_i) is False or self._is_value_set_validation(
-                                    row_i, column_i) is False:
+        if self._is_index_validation(
+                row_i, column_i) is False or self._is_value_set_validation(
+                    row_i, column_i) is False:
             raise None
         self.list[column_i][row_i] = value
 
@@ -115,7 +114,10 @@ class Board():
         Returns:
             list: 設定でいる値リスト 
         """
-        result = [item for item in ITEM if ITEM.ONE <= item.value <= ITEM.NINE and item.value != ITEM.UNKOWN]
+        result = [
+            item for item in ITEM if ITEM.ONE <= item.value <= ITEM.NINE
+            and item.value != ITEM.UNKOWN
+        ]
 
         side_num = len(self.list)
 
@@ -132,8 +134,10 @@ class Board():
         # 同じブロック内に同数字があるといけないので除く
         for block_column_i in range(SINGLE_SIDE_NUM):
             for block_row_i in range(SINGLE_SIDE_NUM):
-                search_column_i =  math.floor(column_i / SINGLE_SIDE_NUM) + block_column_i
-                search_row_i = math.floor(row_i / SINGLE_SIDE_NUM) + block_row_i
+                search_column_i = math.floor(
+                    column_i / SINGLE_SIDE_NUM) + block_column_i
+                search_row_i = math.floor(
+                    row_i / SINGLE_SIDE_NUM) + block_row_i
                 if self.list[search_column_i][search_row_i] in result:
                     result.remove(self.list[search_column_i][search_row_i])
 
@@ -179,7 +183,9 @@ if __name__ == "__main__":
             self._board.set_item(1, 1, ITEM.THREE)
             self._board.set_item(1, 2, ITEM.FOUR)
             self._board.set_item(2, 1, ITEM.SIX)
-            self.assertTrue(self._board.get_setable_item_value(2, 0) == [ITEM.SEVEN, ITEM.NINE])
+            self.assertTrue(
+                self._board.get_setable_item_value(2, 0) ==
+                [ITEM.SEVEN, ITEM.NINE])
 
         def test_normalize(self):
             self._run_before_test()
