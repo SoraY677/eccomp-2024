@@ -6,12 +6,12 @@
 import sys
 import process
 
-from config import QUESTION_MAP
+from config import is_validate_question_id
 
 if __name__ == "__main__":
     args = sys.argv
     question_id = args[1]
-    if question_id not in QUESTION_MAP.keys():
+    if is_validate_question_id(question_id) == False:
         print(f'{question_id} not in questions')
         sys.exit(1)
 
