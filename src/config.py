@@ -68,24 +68,38 @@ def is_validate_question_id(question_id):
     """
     return question_id in QUESTION_MAP.keys()
 
+
 def get_api_key(question_id):
     """APIキー取得
 
     Args:
         question_id (str): 問題ID
+
+    Raises:
+        None
+    
+    Returns:
+        str: apiキー
     """
     if question_id not in QUESTION_MAP:
         raise None
-    
+
     return QUESTION_MAP[question_id]["API_KEY"]
+
 
 def get_submit_max(question_id):
     """提出回数を取得
 
     Args:
         question_id (str): 問題ID
+    
+    Raises:
+        None
+
+    Returns:
+        int: 提出回数
     """
     if question_id not in QUESTION_MAP:
         raise None
-    
+
     return QUESTION_MAP[question_id]["SUBMIT_MAX"]
