@@ -1,8 +1,9 @@
 from util import logger
 from config import get_api_key, get_submit_max
+import solution
 
 
-def exec(question_id):
+def exec(question_id: str) -> None:
     """実行
 
   Args:
@@ -12,7 +13,7 @@ def exec(question_id):
     run(question_id)
 
 
-def init(question_id):
+def init(question_id: str) -> None:
     """初期化
 
   Args:
@@ -22,7 +23,7 @@ def init(question_id):
     logger.info(f'Selected Question: {question_id}')
 
 
-def run(question_id):
+def run(question_id: str) -> None:
     """初期化
 
   Args:
@@ -32,10 +33,15 @@ def run(question_id):
 
     api_key = get_api_key(question_id)
     submit_max = get_submit_max(question_id)
+    print(solution)
 
     for i in range(submit_max):
         pass
         # 解算出
+        # result = solution.run()
+
+        # print(result
+        pass
 
         # 解提出
         # submit()

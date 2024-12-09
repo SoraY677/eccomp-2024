@@ -57,7 +57,7 @@ QUESTION_MAP = {
 }
 
 
-def is_validate_question_id(question_id):
+def is_validate_question_id(question_id: str) -> bool:
     """問題IDの存在真偽判定
 
     Args:
@@ -69,7 +69,7 @@ def is_validate_question_id(question_id):
     return question_id in QUESTION_MAP.keys()
 
 
-def get_api_key(question_id):
+def get_api_key(question_id: str) -> str:
     """APIキー取得
 
     Args:
@@ -87,7 +87,7 @@ def get_api_key(question_id):
     return QUESTION_MAP[question_id]["API_KEY"]
 
 
-def get_submit_max(question_id):
+def get_submit_max(question_id: str) -> int:
     """提出回数を取得
 
     Args:

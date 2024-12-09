@@ -1,5 +1,6 @@
 from os import path
 import itertools
+from typing import List
 from enum import IntEnum
 import math
 import sys
@@ -27,19 +28,19 @@ class ITEM(IntEnum):
 
 class Board():
 
-    list = []
+    _list = []
 
-    def __init__(self, side_num):
+    def __init__(self, side_num: int) -> None:
         """コンストラクタ
 
         Args:
             all_size (int): 全体の1辺
             single_size (int): 1ブロック内の1辺
         """
-        self.list = [[ITEM.UNKOWN] * side_num * SINGLE_SIDE_NUM
+        self._list = [[ITEM.UNKOWN] * side_num * SINGLE_SIDE_NUM
                      for _ in range(side_num * SINGLE_SIDE_NUM)]
 
-    def _is_index_validation(self, row_i, column_i):
+    def _is_index_validation(self, row_i: int, column_i: int) -> bool:
         """テーブルのインデックス指定時のバリデーション
 
         Args:
@@ -47,17 +48,17 @@ class Board():
             column_i (int)
 
         Returns:
-            boolean: バリデーション成功/失敗
+            bool: バリデーション成功/失敗
         """
-        if row_i >= len(self.list):
+        if row_i >= len(self._list):
             logger.error('row index over size')
             return False
-        elif column_i >= len(self.list):
+        elif column_i >= len(self._list):
             logger.error('row index over size')
             return False
         return True
 
-    def _is_value_set_validation(self, row_i, column_i):
+    def _is_value_set_validation(self, row_i: int, column_i: int) -> bool:
         """値設定
 
         Args:
@@ -65,16 +66,16 @@ class Board():
             column_i (int)
 
         Returns:
-            boolean: 値が設定できるか検証
+            bool: 値が設定できるか検証
         """
-        if ITEM.ONE <= self.list[column_i][row_i] <= ITEM.NINE:
+        if ITEM.ONE <= self._list[column_i][row_i] <= ITEM.NINE:
             logger.error(
-                f'value is over range:{self.list[column_i][row_i]}([{row_i}][{column_i}])'
+                f'value is over range:{self._list[column_i][row_i]}([{row_i}][{column_i}])'
             )
             return False
         return True
 
-    def set_item(self, row_i, column_i, value):
+    def set_item(self, row_i: int, column_i: int, value: int) -> None:
         """盤面の指定箇所に数値設定
 
         Args:
@@ -89,22 +90,22 @@ class Board():
                 row_i, column_i) is False or self._is_value_set_validation(
                     row_i, column_i) is False:
             raise None
-        self.list[column_i][row_i] = value
+        self._list[column_i][row_i] = value
 
-    def get_empty_index(self):
+    def get_empty_index(self) -> List[int]:
         """まだ値が確定していないインデックス(行・列)リストを取得
 
         Returns:
-            list: [行,列]要素からなる2次元配列
+            _list: [行,列]要素からなる2次元配列
         """
         result = []
-        for column_i in self.list:
-            for row_i in self.list:
-                if self.list[column_i][row_i] == ITEM.UNKOWN:
+        for column_i in self._list:
+            for row_i in self._list:
+                if self._list[column_i][row_i] == ITEM.UNKOWN:
                     result.append([row_i, column_i])
         return result
 
-    def get_setable_item_value(self, row_i, column_i):
+    def get_setable_item_value(self, row_i: int, column_i: int) -> List[ITEM]:
         """指定の箇所において設定できる値リストを取得
 
         Args:
@@ -112,24 +113,24 @@ class Board():
             column_i (int)
 
         Returns:
-            list: 設定でいる値リスト 
+            _list: 設定でいる値リスト 
         """
         result = [
             item for item in ITEM if ITEM.ONE <= item.value <= ITEM.NINE
             and item.value != ITEM.UNKOWN
         ]
 
-        side_num = len(self.list)
+        side_num = len(self._list)
 
         # 同じ列で同数字があるといけないので除く
         for search_i in range(side_num):
-            if self.list[column_i][search_i] in result:
-                result.remove(self.list[column_i][search_i])
+            if self._list[column_i][search_i] in result:
+                result.remove(self._list[column_i][search_i])
 
         # 同じ行で同数字があるといけないので除く
         for search_i in range(side_num):
-            if self.list[search_i][row_i] in result:
-                result.remove(self.list[search_i][row_i])
+            if self._list[search_i][row_i] in result:
+                result.remove(self._list[search_i][row_i])
 
         # 同じブロック内に同数字があるといけないので除く
         for block_column_i in range(SINGLE_SIDE_NUM):
@@ -138,17 +139,17 @@ class Board():
                     column_i / SINGLE_SIDE_NUM) + block_column_i
                 search_row_i = math.floor(
                     row_i / SINGLE_SIDE_NUM) + block_row_i
-                if self.list[search_column_i][search_row_i] in result:
-                    result.remove(self.list[search_column_i][search_row_i])
+                if self._list[search_column_i][search_row_i] in result:
+                    result.remove(self._list[search_column_i][search_row_i])
 
         return result
 
     def normalize(self):
         """1次元配列化
         Returns:
-            list: 1次元配列に変更したもの
+            _list: 1次元配列に変更したもの
         """
-        return list(itertools.chain.from_iterable(self.list))
+        return _list(itertools.chain.from_iterable(self._list))
 
 
 if __name__ == "__main__":
