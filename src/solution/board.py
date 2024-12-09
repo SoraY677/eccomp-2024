@@ -174,6 +174,14 @@ class Board:
             int: マス合計数
         """
         return len(self._list) * (len(self._list[0]) if len(self._list) > 0 else 0)
+    
+    def get_side_num(self) -> int:
+        """列のセクション数を取得
+
+        Returns:
+            int: 列のセクション数
+        """
+        return self._side_num
 
 
 if __name__ == "__main__":
