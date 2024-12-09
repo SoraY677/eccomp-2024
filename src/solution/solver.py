@@ -4,8 +4,21 @@
 
 from board import Board
 from typing import List
+from evolution import init
 
-def run(population_max:int, side_num:int=3) -> List[List[int]]:
+class OptimizationPair:
+    _board: Board
+    _evalution_point: float
+    def __init__(
+        self,
+        board: Board,
+        evalution_point: float
+    ):
+        
+        self._board = board
+        self._evalution_point = evalution_point
+
+def run(population_max:int, optimization_pairs:List[OptimizationPair]=[], side_num:int=3) -> List[List[int]]:
     """実行
 
     Args:
@@ -15,9 +28,9 @@ def run(population_max:int, side_num:int=3) -> List[List[int]]:
     Returns:
         list[list[int]]: 計算結果
     """
-    population: list[Board] = [Board(side_num)] * population_max
 
-    # Todo
-
-    return [child.normalize() for child in population]
+    if len(optimization_pairs) == 0:
+        return [init(side_num) for _ in range(population_max)]
+    
+    return [] # Todo
 

@@ -1,7 +1,7 @@
 from util import logger
 from config import get_api_key, get_submit_max, POPULATION_MAX
 import solution
-import math 
+import math
 
 
 def exec(question_id: str) -> None:
@@ -34,7 +34,6 @@ def run(question_id: str) -> None:
 
     api_key = get_api_key(question_id)
     submit_max = get_submit_max(question_id)
-    print(solution)
 
     for _ in range(math.floor(submit_max / POPULATION_MAX)):
         # 解算出

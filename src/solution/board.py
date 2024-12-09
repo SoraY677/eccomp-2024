@@ -12,7 +12,6 @@ from util import logger
 
 SINGLE_SIDE_NUM = 3
 
-
 class ITEM(IntEnum):
     UNKOWN = 0
     ONE = 1
@@ -92,15 +91,15 @@ class Board():
             raise None
         self._list[column_i][row_i] = value
 
-    def get_empty_index(self) -> List[int]:
+    def get_empty_index(self) -> List[List[int]]:
         """まだ値が確定していないインデックス(行・列)リストを取得
 
         Returns:
             list: [行,列]要素からなる2次元配列
         """
         result = []
-        for column_i in self._list:
-            for row_i in self._list:
+        for column_i in range(len(self._list)):
+            for row_i in range(len(self._list[column_i])):
                 if self._list[column_i][row_i] == ITEM.UNKOWN:
                     result.append([row_i, column_i])
         return result
@@ -150,6 +149,14 @@ class Board():
             list: 1次元配列に変更したもの
         """
         return [item.value for item  in list(itertools.chain.from_iterable(self._list))]
+    
+    def get_item_max(self) -> int:
+        """マス数を取得
+
+        Returns:
+            int: マス合計数
+        """
+        return len(self._list) * (len(self._list[0]) if len(self._list) > 0 else 0)
 
 
 if __name__ == "__main__":
