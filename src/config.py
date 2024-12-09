@@ -2,7 +2,10 @@
 設定ファイル
 """
 from dotenv import load_dotenv
+from enum import Enum
+from typing import NamedTuple
 import os
+from transmission.const import QuestionType
 
 load_dotenv()
 
@@ -11,52 +14,88 @@ ECCOMP_API_KEY = os.getenv('ECCOMP_API_KEY')
 SOLVE_SINGLE_PREFIX = "s"
 SOLVE_MULTI_PREFIX = "m"
 
-QUESTION_MAP = {
+
+class QuestionConfigItem(NamedTuple):
+    ID: str
+    SUBMIT_MAX: int
+    QUESTION_TYPE: QuestionType
+    IS_MOCK: bool
+
+
+QUESTION_MAP: dict = {
     ### 単目的
     # https://opthub.ai/ja/competitions/eccomp2024/single-objective-1
-    f"{SOLVE_SINGLE_PREFIX}-1": {
-        "API_KEY": os.getenv('SINGLE_OBJECTIVE_1_API_KEY'),
-        "SUBMIT_MAX": 30000
-    },
+    f"{SOLVE_SINGLE_PREFIX}-1":
+    QuestionConfigItem(ID=os.getenv('SINGLE_OBJECTIVE_1_API_KEY'),
+                       SUBMIT_MAX=30000,
+                       QUESTION_TYPE=QuestionType.SINGLE,
+                       IS_MOCK=False),
     # https://opthub.ai/ja/competitions/eccomp2024/single-objective-2
-    f"{SOLVE_SINGLE_PREFIX}-2": {
-        "API_KEY": os.getenv('SINGLE_OBJECTIVE_2_API_KEY'),
-        "SUBMIT_MAX": 30000
-    },
+    f"{SOLVE_SINGLE_PREFIX}-2":
+    QuestionConfigItem(ID=os.getenv('SINGLE_OBJECTIVE_2_API_KEY'),
+                       SUBMIT_MAX=30000,
+                       QUESTION_TYPE=QuestionType.SINGLE,
+                       IS_MOCK=False),
     # https://opthub.ai/ja/competitions/eccomp2024/single-objective-3
-    f"{SOLVE_SINGLE_PREFIX}-3": {
-        "API_KEY": os.getenv('SINGLE_OBJECTIVE_3_API_KEY'),
-        "SUBMIT_MAX": 30000
-    },
+    f"{SOLVE_SINGLE_PREFIX}-3":
+    QuestionConfigItem(ID=os.getenv('SINGLE_OBJECTIVE_3_API_KEY'),
+                       SUBMIT_MAX=30000,
+                       QUESTION_TYPE=QuestionType.SINGLE,
+                       IS_MOCK=False),
+    # mock
+    f"{SOLVE_SINGLE_PREFIX}-x":
+    QuestionConfigItem(ID="XXX",
+                       SUBMIT_MAX=100,
+                       QUESTION_TYPE=QuestionType.SINGLE,
+                       IS_MOCK=True),
     ### 多目的
     # https://opthub.ai/ja/competitions/eccomp2024/multi-objective-1
-    f"{SOLVE_MULTI_PREFIX}-1": {
-        "API_KEY": os.getenv('MULTI_OBJECTIVE_1_API_KEY'),
-        "SUBMIT_MAX": 10000
-    },
+    f"{SOLVE_MULTI_PREFIX}-1":
+    QuestionConfigItem(ID=os.getenv('MULTI_OBJECTIVE_1_API_KEY'),
+                       SUBMIT_MAX=10000,
+                       QUESTION_TYPE=QuestionType.MULTI,
+                       IS_MOCK=False),
     # https://opthub.ai/ja/competitions/eccomp2024/multi-objective-2
-    f"{SOLVE_MULTI_PREFIX}-2": {
-        "API_KEY": os.getenv('MULTI_OBJECTIVE_2_API_KEY'),
-        "SUBMIT_MAX": 10000
-    },
+    f"{SOLVE_MULTI_PREFIX}-2":
+    QuestionConfigItem(ID=os.getenv('MULTI_OBJECTIVE_2_API_KEY'),
+                       SUBMIT_MAX=10000,
+                       QUESTION_TYPE=QuestionType.MULTI,
+                       IS_MOCK=False),
     # https://opthub.ai/ja/competitions/eccomp2024/multi-objective-3
-    f"{SOLVE_MULTI_PREFIX}-3": {
-        "API_KEY": os.getenv('MULTI_OBJECTIVE_3_API_KEY'),
-        "SUBMIT_MAX": 10000
-    },
-    # mock: single
-    f"{SOLVE_SINGLE_PREFIX}-x": {
-        "API_KEY": "xxx",
-        "SUBMIT_MAX": 30000
-    },
-    # mock: single
-    f"{SOLVE_MULTI_PREFIX}-x": {
-        "API_KEY": "xxx",
-        "SUBMIT_MAX": 10000
-    }
+    f"{SOLVE_MULTI_PREFIX}-3":
+    QuestionConfigItem(ID=os.getenv('MULTI_OBJECTIVE_3_API_KEY'),
+                       SUBMIT_MAX=10000,
+                       QUESTION_TYPE=QuestionType.MULTI,
+                       IS_MOCK=False),
+    # mock
+    f"{SOLVE_MULTI_PREFIX}-x":
+    QuestionConfigItem(ID="XXX",
+                       SUBMIT_MAX=100,
+                       QUESTION_TYPE=QuestionType.MULTI,
+                       IS_MOCK=True)
 }
 
+
+def get_question_config_item(question_id: str) -> QuestionConfigItem:
+    """問題の設定情報取得
+
+    Args:
+        question_id (str): 問題ID
+
+    Raises:
+        None
+
+    Returns:
+        QuestionConfigItem: 設定情報
+    """
+    if question_id not in QUESTION_MAP:
+        raise None
+
+    return QUESTION_MAP[question_id]
+
+
 POPULATION_MAX = 10
+
 
 def is_validate_question_id(question_id: str) -> bool:
     """問題IDの存在真偽判定
@@ -68,39 +107,3 @@ def is_validate_question_id(question_id: str) -> bool:
         bool
     """
     return question_id in QUESTION_MAP.keys()
-
-
-def get_api_key(question_id: str) -> str:
-    """APIキー取得
-
-    Args:
-        question_id (str): 問題ID
-
-    Raises:
-        None
-    
-    Returns:
-        str: apiキー
-    """
-    if question_id not in QUESTION_MAP:
-        raise None
-
-    return QUESTION_MAP[question_id]["API_KEY"]
-
-
-def get_submit_max(question_id: str) -> int:
-    """提出回数を取得
-
-    Args:
-        question_id (str): 問題ID
-    
-    Raises:
-        None
-
-    Returns:
-        int: 提出回数
-    """
-    if question_id not in QUESTION_MAP:
-        raise None
-
-    return QUESTION_MAP[question_id]["SUBMIT_MAX"]

@@ -7,6 +7,7 @@ else:
     sys.path.append('..')
 from board import Board
 
+
 def init(side_num: int) -> Board:
     """初期解生成
 
@@ -18,15 +19,18 @@ def init(side_num: int) -> Board:
     """
     result = Board(side_num)
     empty_indexes = result.get_empty_index()
-    hint_max_num = random.randint(0, result.get_item_max()) # Todo: 後でヒント数の最小は調整してもいいかも
+    hint_max_num = random.randint(
+        0, result.get_item_max())  # Todo: 後でヒント数の最小は調整してもいいかも
     for _ in range(hint_max_num):
-        selected_index = random.randint(0, len(empty_indexes)-1)
+        selected_index = random.randint(0, len(empty_indexes) - 1)
         row_i, column_i = empty_indexes.pop(selected_index)
-        setable_nums = result.get_setable_item_value(row_i, column_i) # Todo: 0になるパターンがあるため考えてもいいかも
+        setable_nums = result.get_setable_item_value(
+            row_i, column_i)  # Todo: 0になるパターンがあるため考えてもいいかも
         if len(setable_nums) > 0:
-            item = setable_nums[random.randint(0, len(setable_nums)-1)]
+            item = setable_nums[random.randint(0, len(setable_nums) - 1)]
             result.set_item(row_i, column_i, item)
     return result
+
 
 def crossover(board_1: Board, board_2: Board, crossover_point_num: int):
     """交叉
@@ -46,7 +50,7 @@ def crossover(board_1: Board, board_2: Board, crossover_point_num: int):
     selectable_cross_point_list = list(range(crossover_point_num))
     cross_point_index_list = []
     for _ in range(crossover_point_num):
-        index = random.randint(0, len(selectable_cross_point_list)-1)
+        index = random.randint(0, len(selectable_cross_point_list) - 1)
         cross_point_index_list.append(selectable_cross_point_list.pop(index))
     cross_point_index_list = sorted(cross_point_index_list)
 
@@ -56,15 +60,17 @@ def crossover(board_1: Board, board_2: Board, crossover_point_num: int):
     for point_i in range(len(cross_point_index_list)):
         if point_i == 0:
             continue
-        prev_point = cross_point_index_list[point_i-1]
+        prev_point = cross_point_index_list[point_i - 1]
         current_point = cross_point_index_list[point_i]
 
-        result[prev_point:current_point] = current_normalized_board[prev_point:current_point]
+        result[prev_point:current_point] = current_normalized_board[
+            prev_point:current_point]
         current_normalized_board = normalized_board_1 if current_normalized_board_num == 2 else normalized_board_2
 
     new_board = Board(board_1.get_side_num())
     new_board.reset_by_normalized_list(result)
     return new_board
+
 
 def mutate(side_num: int) -> Board:
     """突然変異
@@ -77,11 +83,12 @@ def mutate(side_num: int) -> Board:
     """
     return init(side_num)
 
+
 if __name__ == "__main__":
     import unittest
 
     class Test(unittest.TestCase):
-        
+
         def test_init(self):
             board = init(3)
             self.assertTrue(len(board.normalize()) == 81)
@@ -91,4 +98,5 @@ if __name__ == "__main__":
             board_2 = init(3)
             result = crossover(board, board_2, 3)
             self.assertTrue(len(result.normalize()) == 81)
+
     unittest.main()

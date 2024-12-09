@@ -12,6 +12,7 @@ from util import logger
 
 SINGLE_SIDE_NUM = 3
 
+
 class ITEM(IntEnum):
     UNKOWN = 0
     ONE = 1
@@ -39,8 +40,8 @@ class Board:
         """
         self._side_num = side_num
         self._list = [[ITEM.UNKOWN] * self._side_num * SINGLE_SIDE_NUM
-                     for _ in range(self._side_num * SINGLE_SIDE_NUM)]
-        
+                      for _ in range(self._side_num * SINGLE_SIDE_NUM)]
+
     def reset_by_normalized_list(self, normalized_list: List[int]) -> None:
         """１次元配列から盤面を再生成
 
@@ -48,10 +49,13 @@ class Board:
             normalized_list (List[int]): １次元配列
         """
         result = []
-        column_max = math.floor(len(normalized_list) / (SINGLE_SIDE_NUM * self._side_num))
+        column_max = math.floor(
+            len(normalized_list) / (SINGLE_SIDE_NUM * self._side_num))
         for column_i in range(column_max):
             row = []
-            for row_item in normalized_list[SINGLE_SIDE_NUM*self._side_num*column_i : SINGLE_SIDE_NUM*self._side_num*(column_i+1)]:
+            for row_item in normalized_list[SINGLE_SIDE_NUM * self._side_num *
+                                            column_i:SINGLE_SIDE_NUM *
+                                            self._side_num * (column_i + 1)]:
                 row.append(ITEM(row_item))
             result.append(row)
         self._list = result
@@ -165,16 +169,20 @@ class Board:
         Returns:
             list: 1次元配列に変更したもの
         """
-        return [item.value for item  in list(itertools.chain.from_iterable(self._list))]
-    
+        return [
+            item.value
+            for item in list(itertools.chain.from_iterable(self._list))
+        ]
+
     def get_item_max(self) -> int:
         """マス数を取得
 
         Returns:
             int: マス合計数
         """
-        return len(self._list) * (len(self._list[0]) if len(self._list) > 0 else 0)
-    
+        return len(
+            self._list) * (len(self._list[0]) if len(self._list) > 0 else 0)
+
     def get_side_num(self) -> int:
         """列のセクション数を取得
 
@@ -209,7 +217,7 @@ if __name__ == "__main__":
 
         def test_reset_by_normalized_list(self):
             self._run_before_test()
-            self._board.reset_by_normalized_list([0]* 81)
+            self._board.reset_by_normalized_list([0] * 81)
             self.assertTrue(self._board.normalize() == [0] * 81)
 
         def test_get_setable_item_value(self):
