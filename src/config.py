@@ -56,6 +56,7 @@ QUESTION_MAP = {
     }
 }
 
+POPULATION_MAX = 10
 
 def is_validate_question_id(question_id: str) -> bool:
     """問題IDの存在真偽判定

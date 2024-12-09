@@ -96,7 +96,7 @@ class Board():
         """まだ値が確定していないインデックス(行・列)リストを取得
 
         Returns:
-            _list: [行,列]要素からなる2次元配列
+            list: [行,列]要素からなる2次元配列
         """
         result = []
         for column_i in self._list:
@@ -113,7 +113,7 @@ class Board():
             column_i (int)
 
         Returns:
-            _list: 設定でいる値リスト 
+            list: 設定できる値リスト 
         """
         result = [
             item for item in ITEM if ITEM.ONE <= item.value <= ITEM.NINE
@@ -147,9 +147,9 @@ class Board():
     def normalize(self):
         """1次元配列化
         Returns:
-            _list: 1次元配列に変更したもの
+            list: 1次元配列に変更したもの
         """
-        return _list(itertools.chain.from_iterable(self._list))
+        return [item.value for item  in list(itertools.chain.from_iterable(self._list))]
 
 
 if __name__ == "__main__":
