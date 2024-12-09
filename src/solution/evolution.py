@@ -1,10 +1,10 @@
 import random
 from os import path
 import sys
-if __name__ != "__main__":
-    sys.path.append(path.dirname(__file__))
-else:
+if __name__ == "__main__":
     sys.path.append('..')
+else:
+    sys.path.append(path.join(path.dirname(__file__), '..'))
 from board import Board
 
 
@@ -84,19 +84,20 @@ def mutate(side_num: int) -> Board:
     return init(side_num)
 
 
-if __name__ == "__main__":
-    import unittest
+#
+# 単体テスト
+#
+import unittest
 
-    class Test(unittest.TestCase):
 
-        def test_init(self):
-            board = init(3)
-            self.assertTrue(len(board.normalize()) == 81)
+class Test(unittest.TestCase):
 
-        def test_crossover(self):
-            board = init(3)
-            board_2 = init(3)
-            result = crossover(board, board_2, 3)
-            self.assertTrue(len(result.normalize()) == 81)
+    def test_init(self):
+        board = init(3)
+        self.assertTrue(len(board.normalize()) == 81)
 
-    unittest.main()
+    def test_crossover(self):
+        board = init(3)
+        board_2 = init(3)
+        result = crossover(board, board_2, 3)
+        self.assertTrue(len(result.normalize()) == 81)

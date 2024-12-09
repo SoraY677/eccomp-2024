@@ -4,10 +4,10 @@ from typing import List
 from enum import IntEnum
 import math
 import sys
-if __name__ != "__main__":
-    sys.path.append(path.dirname(__file__))
-else:
+if __name__ == "__main__":
     sys.path.append('..')
+else:
+    sys.path.append(path.join(path.dirname(__file__), '..'))
 from util import logger
 
 SINGLE_SIDE_NUM = 3
@@ -192,49 +192,47 @@ class Board:
         return self._side_num
 
 
-if __name__ == "__main__":
-    import unittest
+import unittest
 
-    #テストケース一覧(提出は実際にしてしまうため未検証)
-    class Test(unittest.TestCase):
 
-        _board = Board(3)
+#テストケース一覧(提出は実際にしてしまうため未検証)
+class Test(unittest.TestCase):
 
-        def _run_before_test(self):
-            logger.init()
-            self._board = Board(3)
+    _board = Board(3)
 
-        def test_standard_init(self):
-            self._run_before_test()
-            self.assertTrue(self._board.normalize() == [0] * 81)
+    def _run_before_test(self):
+        logger.init()
+        self._board = Board(3)
 
-        def test_set_item(self):
-            self._run_before_test()
-            self._board.set_item(1, 1, ITEM.TWO)
-            compared = [ITEM.UNKOWN] * 81
-            compared[10] = ITEM.TWO
-            self.assertTrue(self._board.normalize() == compared)
+    def test_standard_init(self):
+        self._run_before_test()
+        self.assertTrue(self._board.normalize() == [0] * 81)
 
-        def test_reset_by_normalized_list(self):
-            self._run_before_test()
-            self._board.reset_by_normalized_list([0] * 81)
-            self.assertTrue(self._board.normalize() == [0] * 81)
+    def test_set_item(self):
+        self._run_before_test()
+        self._board.set_item(1, 1, ITEM.TWO)
+        compared = [ITEM.UNKOWN] * 81
+        compared[10] = ITEM.TWO
+        self.assertTrue(self._board.normalize() == compared)
 
-        def test_get_setable_item_value(self):
-            self._run_before_test()
-            self._board.set_item(0, 0, ITEM.ONE)
-            self._board.set_item(0, 1, ITEM.EIGHT)
-            self._board.set_item(0, 2, ITEM.FIVE)
-            self._board.set_item(1, 0, ITEM.TWO)
-            self._board.set_item(1, 1, ITEM.THREE)
-            self._board.set_item(1, 2, ITEM.FOUR)
-            self._board.set_item(2, 1, ITEM.SIX)
-            self.assertTrue(
-                self._board.get_setable_item_value(2, 0) ==
-                [ITEM.SEVEN, ITEM.NINE])
+    def test_reset_by_normalized_list(self):
+        self._run_before_test()
+        self._board.reset_by_normalized_list([0] * 81)
+        self.assertTrue(self._board.normalize() == [0] * 81)
 
-        def test_normalize(self):
-            self._run_before_test()
-            self.assertTrue(self._board.normalize() == [0] * 81)
+    def test_get_setable_item_value(self):
+        self._run_before_test()
+        self._board.set_item(0, 0, ITEM.ONE)
+        self._board.set_item(0, 1, ITEM.EIGHT)
+        self._board.set_item(0, 2, ITEM.FIVE)
+        self._board.set_item(1, 0, ITEM.TWO)
+        self._board.set_item(1, 1, ITEM.THREE)
+        self._board.set_item(1, 2, ITEM.FOUR)
+        self._board.set_item(2, 1, ITEM.SIX)
+        self.assertTrue(
+            self._board.get_setable_item_value(2, 0) ==
+            [ITEM.SEVEN, ITEM.NINE])
 
-    unittest.main()
+    def test_normalize(self):
+        self._run_before_test()
+        self.assertTrue(self._board.normalize() == [0] * 81)

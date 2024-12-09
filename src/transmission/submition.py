@@ -2,7 +2,6 @@
 解提出
 """
 from os import path
-from enum import Enum
 import sys
 import json
 import subprocess
@@ -10,10 +9,10 @@ from const import QuestionType, MOCK_SINGLE_RESPONSE, MOCK_MULTI_RESPONSE, MOCK_
 import random
 from typing import Union
 
-if __name__ != "__main__":
-    sys.path.append(path.dirname(__file__))
-else:
+if __name__ == "__main__":
     sys.path.append('..')
+else:
+    sys.path.append(path.join(path.dirname(__file__), '..'))
 from util import logger
 
 _question_id: Union[str, None] = None
@@ -154,25 +153,26 @@ def _decode_response(response_txt):
         raise e
 
 
-if __name__ == "__main__":
-    import unittest
+#
+# 単体テスト
+#
+import unittest
 
-    #テストケース一覧(提出は実際にしてしまうため未検証)
-    class Test(unittest.TestCase):
 
-        def _run_before_test(self):
-            logger.init()
-            init('xxx', 0, QuestionType.SINGLE, True)
+class Test(unittest.TestCase):
 
-        def test_init(self):
-            self._run_before_test()
-            self.assertTrue(_question_id == 'xxx')
-            self.assertTrue(_submit_max == 0)
-            self.assertTrue(_question_type.value == QuestionType.SINGLE.value)
+    def _run_before_test(self):
+        logger.init()
+        init('xxx', 0, QuestionType.SINGLE, True)
 
-        def test_mock_submit(self):
-            self._run_before_test()
-            result = submit({'test': {}})
-            self.assertTrue(result['test'] == MOCK_SINGLE_RESPONSE or result['test'] == MOCK_ERROR_RESPONSE)
+    def test_init(self):
+        self._run_before_test()
+        self.assertTrue(_question_id == 'xxx')
+        self.assertTrue(_submit_max == 0)
+        self.assertTrue(_question_type.value == QuestionType.SINGLE.value)
 
-    unittest.main()
+    def test_mock_submit(self):
+        self._run_before_test()
+        result = submit({'test': {}})
+        self.assertTrue(result['test'] == MOCK_SINGLE_RESPONSE
+                        or result['test'] == MOCK_ERROR_RESPONSE)
