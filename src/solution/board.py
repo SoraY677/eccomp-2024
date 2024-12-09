@@ -25,19 +25,36 @@ class ITEM(IntEnum):
     NINE = 9
 
 
-class Board():
+class Board:
 
+    _side_num = 0
     _list = []
 
-    def __init__(self, side_num: int) -> None:
+    def __init__(self, side_num: int = 0) -> None:
         """コンストラクタ
 
         Args:
             all_size (int): 全体の1辺
             single_size (int): 1ブロック内の1辺
         """
-        self._list = [[ITEM.UNKOWN] * side_num * SINGLE_SIDE_NUM
-                     for _ in range(side_num * SINGLE_SIDE_NUM)]
+        self._side_num = side_num
+        self._list = [[ITEM.UNKOWN] * self._side_num * SINGLE_SIDE_NUM
+                     for _ in range(self._side_num * SINGLE_SIDE_NUM)]
+        
+    def reset_by_normalized_list(self, normalized_list: List[int]) -> None:
+        """１次元配列から盤面を再生成
+
+        Args:
+            normalized_list (List[int]): １次元配列
+        """
+        result = []
+        column_max = math.floor(len(normalized_list) / (SINGLE_SIDE_NUM * self._side_num))
+        for column_i in range(column_max):
+            row = []
+            for row_item in normalized_list[SINGLE_SIDE_NUM*self._side_num*column_i : SINGLE_SIDE_NUM*self._side_num*(column_i+1)]:
+                row.append(ITEM(row_item))
+            result.append(row)
+        self._list = result
 
     def _is_index_validation(self, row_i: int, column_i: int) -> bool:
         """テーブルのインデックス指定時のバリデーション
@@ -181,6 +198,11 @@ if __name__ == "__main__":
             compared = [ITEM.UNKOWN] * 81
             compared[10] = ITEM.TWO
             self.assertTrue(self._board.normalize() == compared)
+
+        def test_reset_by_normalized_list(self):
+            self._run_before_test()
+            self._board.reset_by_normalized_list([0]* 81)
+            self.assertTrue(self._board.normalize() == [0] * 81)
 
         def test_get_setable_item_value(self):
             self._run_before_test()
