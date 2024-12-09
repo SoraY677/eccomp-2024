@@ -15,7 +15,6 @@ if __name__ != "__main__":
 else:
     sys.path.append('..')
 from util import logger
-from const import RESULT_STATUS_ERROR
 
 _question_id: Union[str, None] = None
 _submit_max = -1
@@ -163,23 +162,17 @@ if __name__ == "__main__":
 
         def _run_before_test(self):
             logger.init()
+            init('xxx', 0, QuestionType.SINGLE, True)
 
         def test_init(self):
             self._run_before_test()
-            init(0, 0)
-            self.assertTrue(_question_id == 0)
+            self.assertTrue(_question_id == 'xxx')
             self.assertTrue(_submit_max == 0)
+            self.assertTrue(_question_type.value == QuestionType.SINGLE.value)
 
-        def test_not_inited(self):
+        def test_mock_submit(self):
             self._run_before_test()
-            init(-1, -1)
-            result = submit({})
-            self.assertTrue(result['status'] == RESULT_STATUS_ERROR)
-
-        def test_inited_but_safe_mode_activate(self):
-            self._run_before_test()
-            init(0, 0)
-            result = submit({})
-            self.assertTrue(result['status'] == RESULT_STATUS_ERROR)
+            result = submit({'test': {}})
+            self.assertTrue(result['test'] == MOCK_SINGLE_RESPONSE or result['test'] == MOCK_ERROR_RESPONSE)
 
     unittest.main()

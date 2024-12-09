@@ -1,12 +1,11 @@
 from enum import Enum
-
-RESULT_STATUS_ERROR = "error"
-
-MOCK_SINGLE_RESPONSE = {'objective': 0.5672, 'feasible': True}
-MOCK_MULTI_RESPONSE = {'objective': [0.3154, 0.3619], 'feasible': True}
-MOCK_ERROR_RESPONSE = {'feasible': False}
-
+from random import random
 
 class QuestionType(Enum):
     SINGLE = 1
     MULTI = 2
+
+# カスタムレスポンス
+MOCK_SINGLE_RESPONSE = {'objective': random(), 'feasible': True}
+MOCK_MULTI_RESPONSE = {'objective': [random(), random()], 'feasible': True}
+MOCK_ERROR_RESPONSE = {'feasible': False}
