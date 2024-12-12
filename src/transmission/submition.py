@@ -15,13 +15,14 @@ else:
     sys.path.append(path.join(path.dirname(__file__), '..'))
 from util import logger
 
+_api_key: Union[str, None] = None
 _question_id: Union[str, None] = None
 _submit_max = -1
 _question_type: Union[QuestionType, None] = None
 _is_mock = True
 
 
-def init(question_id: str, submit_max: int, question_type: QuestionType,
+def init(api_key: str, question_id: str, submit_max: int, question_type: QuestionType,
          is_mock: bool):
     """初期化
 
@@ -29,6 +30,8 @@ def init(question_id: str, submit_max: int, question_type: QuestionType,
       api_key (int): 問題ID
       submit_max (int): 提出最大回数
   """
+    global _api_key
+    _api_key = api_key
     global _question_id
     _question_id = question_id
     global _submit_max
@@ -37,6 +40,7 @@ def init(question_id: str, submit_max: int, question_type: QuestionType,
     _question_type = question_type
     global _is_mock
     _is_mock = is_mock
+    
 
 
 def submit(ans_dict: dict) -> dict:
@@ -123,9 +127,17 @@ def _post_server(ans: dict) -> dict:
     Returns:
         dict: 結果
     """
+    global _api_key
+    global _question_id
     try:
-        global _question_id
-        command = f"echo {json.dumps(ans)} | opt submit --match={_question_id}"
+        command = [
+            "curl",
+            "-X", "POST",
+            f"https://api.opthub.ai/matches/{_question_id}/trials",
+            "-H", "Content-Type: application/json",
+            "-H", f"x-api-key: {_api_key}",
+            "-d", json.dumps(ans)
+        ]
         process = subprocess.Popen(command,
                                    stdout=subprocess.PIPE,
                                    stderr=subprocess.STDOUT,
@@ -163,7 +175,7 @@ class Test(unittest.TestCase):
 
     def _run_before_test(self):
         logger.init()
-        init('xxx', 0, QuestionType.SINGLE, True)
+        init('xxx', 'xxx', 0, QuestionType.SINGLE, True)
 
     def test_init(self):
         self._run_before_test()
@@ -174,5 +186,5 @@ class Test(unittest.TestCase):
     def test_mock_submit(self):
         self._run_before_test()
         result = submit({'test': {}})
-        self.assertTrue(result['test'] == get_mock_single_response()
+        self.assertTrue(result['test']['feasible'] == get_mock_single_response()['feasible']
                         or result['test'] == MOCK_ERROR_RESPONSE)

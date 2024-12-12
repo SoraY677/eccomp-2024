@@ -6,7 +6,7 @@
 import sys
 import process
 
-from config import is_validate_question_id
+from config import is_validate_question_id, ECCOMP_API_KEY
 
 if __name__ == "__main__":
     args = sys.argv
@@ -15,4 +15,4 @@ if __name__ == "__main__":
         print(f'{question_id} not in questions')
         sys.exit(1)
 
-    process.exec(question_id)
+    process.exec(ECCOMP_API_KEY, question_id)

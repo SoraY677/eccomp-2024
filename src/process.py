@@ -7,17 +7,17 @@ from transmission import submition
 from solution import OptimizationPair
 
 
-def exec(question_id: str) -> None:
+def exec(api_key: str, question_id: str) -> None:
     """実行
 
   Args:
       question_id (str): 問題ID
   """
-    init(question_id)
+    init(api_key, question_id)
     run(question_id)
 
 
-def init(question_id: str) -> None:
+def init(api_key: str, question_id: str) -> None:
     """初期化
 
   Args:
@@ -27,7 +27,7 @@ def init(question_id: str) -> None:
     logger.info(f'Selected Question: {question_id}')
 
     question_config_item = get_question_config_item(question_id)
-    submition.init(question_config_item.ID, question_config_item.SUBMIT_MAX,
+    submition.init(api_key, question_config_item.ID, question_config_item.SUBMIT_MAX,
                    question_config_item.QUESTION_TYPE,
                    question_config_item.IS_MOCK)
 
