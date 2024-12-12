@@ -202,7 +202,7 @@ class Board:
             int: 列のセクション数
         """
         return self._side_num
-    
+
     def get_size(self) -> int:
         """1辺のマス数取得
 
