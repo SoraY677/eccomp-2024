@@ -22,8 +22,8 @@ _question_type: Union[QuestionType, None] = None
 _is_mock = True
 
 
-def init(api_key: str, question_id: str, submit_max: int, question_type: QuestionType,
-         is_mock: bool):
+def init(api_key: str, question_id: str, submit_max: int,
+         question_type: QuestionType, is_mock: bool):
     """初期化
 
   Args:
@@ -40,7 +40,6 @@ def init(api_key: str, question_id: str, submit_max: int, question_type: Questio
     _question_type = question_type
     global _is_mock
     _is_mock = is_mock
-    
 
 
 def submit(ans_dict: dict) -> dict:
@@ -131,12 +130,11 @@ def _post_server(ans: dict) -> dict:
     global _question_id
     try:
         command = [
-            "curl",
-            "-X", "POST",
-            f"https://api.opthub.ai/matches/{_question_id}/trials",
-            "-H", "Content-Type: application/json",
-            "-H", f"x-api-key: {_api_key}",
-            "-d", json.dumps(ans)
+            "curl", "-X", "POST",
+            f"https://api.opthub.ai/matches/{_question_id}/trials", "-H",
+            "Content-Type: application/json", "-H", f"x-api-key: {_api_key}",
+            "-d",
+            json.dumps(ans)
         ]
         process = subprocess.Popen(command,
                                    stdout=subprocess.PIPE,
@@ -186,5 +184,6 @@ class Test(unittest.TestCase):
     def test_mock_submit(self):
         self._run_before_test()
         result = submit({'test': {}})
-        self.assertTrue(result['test']['feasible'] == get_mock_single_response()['feasible']
+        self.assertTrue(result['test']['feasible']
+                        == get_mock_single_response()['feasible']
                         or result['test'] == MOCK_ERROR_RESPONSE)

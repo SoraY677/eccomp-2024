@@ -27,7 +27,8 @@ def init(api_key: str, question_id: str) -> None:
     logger.info(f'Selected Question: {question_id}')
 
     question_config_item = get_question_config_item(question_id)
-    submition.init(api_key, question_config_item.ID, question_config_item.SUBMIT_MAX,
+    submition.init(api_key, question_config_item.ID,
+                   question_config_item.SUBMIT_MAX,
                    question_config_item.QUESTION_TYPE,
                    question_config_item.IS_MOCK)
 

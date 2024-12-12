@@ -46,6 +46,8 @@ def _select(optimization_pairs: List[OptimizationPair],
                        if pairs.get_evaluation_point() != 0 else 1)
         for pairs in optimization_pairs
     ]
+    if not any(weights):  # すべて0のパターンもあり得るので対応
+        weights = [1] * len(optimization_pairs)
     return random.choices(optimization_pairs, k=num, weights=weights)
 
 
