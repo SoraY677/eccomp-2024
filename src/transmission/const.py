@@ -8,6 +8,8 @@ class QuestionType(Enum):
 
 
 # カスタムレスポンス
-MOCK_SINGLE_RESPONSE = {'objective': random(), 'feasible': True}
-MOCK_MULTI_RESPONSE = {'objective': [random(), random()], 'feasible': True}
+def get_mock_single_response():
+    return {'objective': random(), 'feasible': True}
+def get_mock_mutli_response():
+    return {'objective': [random(), random()], 'feasible': True}
 MOCK_ERROR_RESPONSE = {'feasible': False}

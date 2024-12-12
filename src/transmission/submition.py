@@ -5,7 +5,7 @@ from os import path
 import sys
 import json
 import subprocess
-from const import QuestionType, MOCK_SINGLE_RESPONSE, MOCK_MULTI_RESPONSE, MOCK_ERROR_RESPONSE
+from const import QuestionType, get_mock_single_response, get_mock_mutli_response, MOCK_ERROR_RESPONSE
 import random
 from typing import Union
 
@@ -107,9 +107,9 @@ def _get_mock() -> dict:
 
     global _question_type
     if _question_type.value is QuestionType.SINGLE.value:
-        return MOCK_SINGLE_RESPONSE
+        return get_mock_single_response()
     elif _question_type.value is QuestionType.MULTI.value:
-        return MOCK_MULTI_RESPONSE
+        return get_mock_mutli_response()
 
     return MOCK_ERROR_RESPONSE
 
@@ -174,5 +174,5 @@ class Test(unittest.TestCase):
     def test_mock_submit(self):
         self._run_before_test()
         result = submit({'test': {}})
-        self.assertTrue(result['test'] == MOCK_SINGLE_RESPONSE
+        self.assertTrue(result['test'] == get_mock_single_response()
                         or result['test'] == MOCK_ERROR_RESPONSE)
