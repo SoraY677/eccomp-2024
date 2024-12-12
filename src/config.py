@@ -96,7 +96,7 @@ def get_question_config_item(question_id: str) -> QuestionConfigItem:
 
 POPULATION_MAX = 10  # 10個体
 GENERATION_MAX = 100  # 100回進化
-MUTATION_RATE = 0.1  # 突然変異率10%
+MUTATION_RATE = 0.05  # 突然変異率
 
 
 def is_validate_question_id(question_id: str) -> bool:

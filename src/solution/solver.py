@@ -42,7 +42,8 @@ def _select(optimization_pairs: List[OptimizationPair],
         total_score += pairs.get_evaluation_point()
 
     weights = [
-        total_score / pairs.get_evaluation_point()
+        total_score / (pairs.get_evaluation_point()
+                       if pairs.get_evaluation_point() != 0 else 1)
         for pairs in optimization_pairs
     ]
     return random.choices(optimization_pairs, k=num, weights=weights)
@@ -50,6 +51,7 @@ def _select(optimization_pairs: List[OptimizationPair],
 
 def run(population_max: int,
         generation_max: int,
+        mutation_rate: float,
         optimization_pairs: List[OptimizationPair] = [],
         side_num: int = 3) -> List[Board]:
     """実行
@@ -61,26 +63,33 @@ def run(population_max: int,
     Returns:
         list[list[int]]: 計算結果
     """
-
     if len(optimization_pairs) <= population_max / 2:
         return [init(side_num) for _ in range(population_max)]
 
-    generated_results: List[OptimizationPair] = [
-        optimization_pair for optimization_pair in optimization_pairs
-    ]
-    for _ in generation_max:
-        for _ in population_max:
-            selected_individual = _select(optimization_pairs)
-            new_board = crossover(selected_individual[0].get_board(),
-                                  selected_individual[1].get_board(),
-                                  3)  # 仮置きで3点交叉
+    for i in range(generation_max):
+        generated_results: List[OptimizationPair] = []
 
+        for j in range(population_max):
             sample_individual = _select(optimization_pairs, 1)[0]
-            score = math.sqrt(
-                math.pow(
-                    sample_individual.get_evaluation_point() -
-                    calc_score(new_board), 2))
-            generated_results.append(OptimizationPair(sample_individual,
-                                                      score))
-        generated_results = []
-    return [result.get_board() for result in generated_results]
+            if mutation_rate < random.random():
+                selected_individual = _select(optimization_pairs)
+                new_board = crossover(selected_individual[0].get_board(),
+                                      selected_individual[1].get_board(),
+                                      3)  # 仮置きで3点交叉
+                score = math.sqrt(
+                    math.pow(
+                        sample_individual.get_evaluation_point() -
+                        calc_score(new_board), 2))
+                generated_results.append(
+                    OptimizationPair(sample_individual.get_board(), score))
+            else:
+                new_board = init(side_num)
+                score = math.sqrt(
+                    math.pow(
+                        sample_individual.get_evaluation_point() -
+                        calc_score(new_board), 2))
+                generated_results.append(OptimizationPair(new_board, score))
+    results = []
+    for result in generated_results:
+        results.append(result.get_board())
+    return results
