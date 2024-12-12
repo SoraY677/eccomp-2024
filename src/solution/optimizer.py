@@ -133,8 +133,8 @@ def calc_symmetry_evalutaion_point(board: Board, line_type: LineType) -> float:
     return -1.0
 
 
-def calc_avg_evaluate(board: Board) -> float:
-    """平均評価点を算出
+def calc_score(board: Board) -> float:
+    """評価点を算出
 
     Args:
         board (Board): 盤情報
@@ -195,6 +195,6 @@ class Test(unittest.TestCase):
         self.assertEqual(calc_symmetry_evalutaion_point(board, LineType.POINT),
                          5.6568542494923806)
 
-    def test_calc_avg_evaluate(self):
+    def test_calc_score(self):
         board = self._generate_mock_board()
-        self.assertEqual(calc_avg_evaluate(board), 3.3941125496954285)
+        self.assertEqual(calc_score(board), 3.3941125496954285)
