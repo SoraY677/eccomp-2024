@@ -43,6 +43,8 @@ def run(question_id: str) -> None:
     optimization_pairs = []
     for i in range(math.floor(question_config_item.SUBMIT_MAX /
                               POPULATION_MAX)):
+        
+        logger.info(f"========[{i+1}]========")
         # 解算出
         result = solution.run(POPULATION_MAX, optimization_pairs)
 
