@@ -28,6 +28,15 @@ class OptimizationPair:
 
 def _select(optimization_pairs: List[OptimizationPair],
             num=2) -> List[OptimizationPair]:
+    """ルーレット選択方式
+
+    Args:
+        optimization_pairs (List[OptimizationPair]): 最適化用リスト
+        num (int, optional): リストの要素数. Defaults to 2.
+
+    Returns:
+        List[OptimizationPair]: _description_
+    """
     total_score = 0
     for pairs in optimization_pairs:
         total_score += pairs.get_evaluation_point()
