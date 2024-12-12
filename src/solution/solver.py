@@ -25,12 +25,17 @@ class OptimizationPair:
     def get_evaluation_point(self):
         return self._evalution_point
 
-def _select(optimization_pairs: List[OptimizationPair], num = 2) -> List[OptimizationPair]:
+
+def _select(optimization_pairs: List[OptimizationPair],
+            num=2) -> List[OptimizationPair]:
     total_score = 0
     for pairs in optimization_pairs:
         total_score += pairs.get_evaluation_point()
-    
-    weights = [total_score / pairs.get_evaluation_point() for pairs in optimization_pairs]
+
+    weights = [
+        total_score / pairs.get_evaluation_point()
+        for pairs in optimization_pairs
+    ]
     return random.choices(optimization_pairs, k=num, weights=weights)
 
 
@@ -51,14 +56,22 @@ def run(population_max: int,
     if len(optimization_pairs) <= population_max / 2:
         return [init(side_num) for _ in range(population_max)]
 
-    generated_results: List[OptimizationPair] = [optimization_pair for optimization_pair in optimization_pairs]
+    generated_results: List[OptimizationPair] = [
+        optimization_pair for optimization_pair in optimization_pairs
+    ]
     for _ in generation_max:
         for _ in population_max:
             selected_individual = _select(optimization_pairs)
-            new_board = crossover(selected_individual[0].get_board(), selected_individual[1].get_board(), 3) # 仮置きで3点交叉
-        
+            new_board = crossover(selected_individual[0].get_board(),
+                                  selected_individual[1].get_board(),
+                                  3)  # 仮置きで3点交叉
+
             sample_individual = _select(optimization_pairs, 1)[0]
-            score = math.sqrt(math.pow(sample_individual.get_evaluation_point() - calc_score(new_board), 2))
-            generated_results.append(OptimizationPair(sample_individual, score))
+            score = math.sqrt(
+                math.pow(
+                    sample_individual.get_evaluation_point() -
+                    calc_score(new_board), 2))
+            generated_results.append(OptimizationPair(sample_individual,
+                                                      score))
         generated_results = []
     return [result.get_board() for result in generated_results]
