@@ -110,7 +110,19 @@ class Board:
                 row_i, column_i) is False or self._is_value_set_validation(
                     row_i, column_i) is False:
             raise None
-        self._list[column_i][row_i] = value
+        self._list[column_i][row_i] = ITEM(value)
+
+    def has_item(self, row_i: int, column_i: int) -> bool:
+        """対象マスで値が設定されているか
+
+        Args:
+            row_i (int)
+            column_i (int)
+
+        Returns:
+            bool 
+        """
+        return self._list[column_i][row_i].value != ITEM.UNKOWN
 
     def get_empty_index(self) -> List[List[int]]:
         """まだ値が確定していないインデックス(行・列)リストを取得
@@ -190,6 +202,14 @@ class Board:
             int: 列のセクション数
         """
         return self._side_num
+    
+    def get_size(self) -> int:
+        """1辺のマス数取得
+
+        Returns:
+            int: 1辺のマス数
+        """
+        return self.get_side_num() * SINGLE_SIDE_NUM
 
 
 import unittest
