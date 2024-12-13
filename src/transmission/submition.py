@@ -148,7 +148,7 @@ def _post_server(ans: any) -> dict:
             trial = opthub_match.submit(ans)
             eval = trial.wait_evaluation()
 
-            if eval.evaluation.feasible is False:
+            if eval.feasible is False:
                 return MOCK_ERROR_RESPONSE
 
             return {
