@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from enum import Enum
 from typing import NamedTuple
 import os
+import datetime
 from transmission.const import QuestionType
 
 load_dotenv()
@@ -109,3 +110,6 @@ def is_validate_question_id(question_id: str) -> bool:
         bool
     """
     return question_id in QUESTION_MAP.keys()
+
+def get_result_file_path(question_id):
+    return f'./data/result-{question_id}-{datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.csv'

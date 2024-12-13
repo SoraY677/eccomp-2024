@@ -6,6 +6,7 @@ import sys
 import json
 import subprocess
 from const import QuestionType, get_mock_single_response, get_mock_mutli_response, MOCK_ERROR_RESPONSE
+from data import write
 import random
 from typing import Union
 
@@ -20,10 +21,11 @@ _question_id: Union[str, None] = None
 _submit_max = -1
 _question_type: Union[QuestionType, None] = None
 _is_mock = True
+_data_file_path = ''
 
 
 def init(api_key: str, question_id: str, submit_max: int,
-         question_type: QuestionType, is_mock: bool):
+         question_type: QuestionType, is_mock: bool, data_file_path: str = ''):
     """初期化
 
   Args:
@@ -40,6 +42,8 @@ def init(api_key: str, question_id: str, submit_max: int,
     _question_type = question_type
     global _is_mock
     _is_mock = is_mock
+    global _data_file_path
+    _data_file_path = data_file_path
 
 
 def submit(ans_dict: dict) -> dict:
@@ -55,6 +59,7 @@ def submit(ans_dict: dict) -> dict:
     global _question_id
     global _submit_max
     global _question_type
+    global _data_file_path
 
     if _is_inited(_question_id, _submit_max, _question_type) is False:
         error_message = "transmission not inited"
@@ -65,6 +70,11 @@ def submit(ans_dict: dict) -> dict:
     for id in ans_dict:
         ans = ans_dict[id]
         result_map[id] = _exec_process(ans)
+        if _data_file_path != '':
+            write(_data_file_path, {
+                "ans": ans_dict[id],
+                "result": result_map[id]
+            })
     return result_map
 
 
