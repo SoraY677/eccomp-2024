@@ -77,7 +77,7 @@ def run(population_max: int,
                 selected_individual = _select(optimization_pairs)
                 new_board = crossover(selected_individual[0].get_board(),
                                       selected_individual[1].get_board(),
-                                      3)  # 仮置きで3点交叉
+                                      random.randint(1, side_num*side_num))
                 score = math.sqrt(
                     math.pow(
                         sample_individual.get_evaluation_point() -
