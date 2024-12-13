@@ -87,4 +87,3 @@ def run(question_id: str) -> None:
             len(optimize_responses) -
             POPULATION_MAX if len(optimize_responses) > POPULATION_MAX else 0
         ):len(optimize_responses)]
-

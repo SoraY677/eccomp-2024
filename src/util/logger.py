@@ -13,7 +13,7 @@ _logger = None
 _log_func = {}
 
 
-def init(filepath: str='', level=logging.DEBUG):
+def init(filepath: str = '', level=logging.DEBUG):
     """初期化
 
     Args:

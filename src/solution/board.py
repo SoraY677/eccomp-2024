@@ -168,22 +168,27 @@ class Board:
         for block_column_i in range(SINGLE_SIDE_NUM):
             for block_row_i in range(SINGLE_SIDE_NUM):
                 search_column_i = math.floor(
-                    column_i / SINGLE_SIDE_NUM) * SINGLE_SIDE_NUM + block_column_i
+                    column_i /
+                    SINGLE_SIDE_NUM) * SINGLE_SIDE_NUM + block_column_i
                 search_row_i = math.floor(
-                    row_i / SINGLE_SIDE_NUM) * SINGLE_SIDE_NUM  + block_row_i
+                    row_i / SINGLE_SIDE_NUM) * SINGLE_SIDE_NUM + block_row_i
                 if self._list[search_column_i][search_row_i] in result:
                     result.remove(self._list[search_column_i][search_row_i])
 
         return result
-    
+
     def create_table(self):
         result = []
         array = list(itertools.chain.from_iterable(self._list))
 
         for i in range(SINGLE_SIDE_NUM * self._side_num):
-            result.append([item.value for item in array[i*SINGLE_SIDE_NUM * self._side_num: (i+1)*SINGLE_SIDE_NUM * self._side_num]])
+            result.append([
+                item.value for item in array[i * SINGLE_SIDE_NUM *
+                                             self._side_num:(i + 1) *
+                                             SINGLE_SIDE_NUM * self._side_num]
+            ])
         return result
-    
+
     def reset_by_table(self, table: List[List[int]]):
         for column_i in range(len(table)):
             for row_i in range(len(table[column_i])):

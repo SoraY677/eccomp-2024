@@ -2,6 +2,7 @@ import os
 import csv
 import unittest
 
+
 def write(file_path: str, content: dict):
     """ファイルに結果を記載
 
@@ -13,6 +14,7 @@ def write(file_path: str, content: dict):
         _write_add(file_path, content)
     else:
         _write_new(file_path, content)
+
 
 def _write_new(file_path: str, content: dict):
     """ファイル新規作成
@@ -28,6 +30,7 @@ def _write_new(file_path: str, content: dict):
         writer = csv.writer(f)
         writer.writerows([list(content.keys()), list(content.values())])
 
+
 def _write_add(file_path: str, content: dict):
     """ファイル追記
 
@@ -38,18 +41,24 @@ def _write_add(file_path: str, content: dict):
     # ヘッダーの整合性検証
     isHeaderValidation = False
     with open(file_path) as f:
-        isHeaderValidation =  f.readline().replace('\n', '').split(',') == list(content.keys())
+        isHeaderValidation = f.readline().replace('\n', '').split(',') == list(
+            content.keys())
     if isHeaderValidation is False:
         raise ValueError('Submition data header is wrong')
-    
+
     with open(file_path, 'a', newline='') as f:
         writer = csv.writer(f)
         writer.writerows([list(content.values())])
 
+
 import datetime
+
+time_str = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
+
+
 class Test(unittest.TestCase):
 
-    _file_path = f'./test/transmission-data-test-{datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.csv'
+    _file_path = f'./test/transmission-data-test-{time_str}.csv'
 
     def test_first_write(self):
         write(self._file_path, {"id": 1, "value": "test"})

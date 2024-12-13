@@ -23,8 +23,12 @@ _is_mock = True
 _data_file_path = ''
 
 
-def init(api_key: str, question_id: str, submit_max: int,
-         question_type: QuestionType, is_mock: bool, data_file_path: str = ''):
+def init(api_key: str,
+         question_id: str,
+         submit_max: int,
+         question_type: QuestionType,
+         is_mock: bool,
+         data_file_path: str = ''):
     """初期化
 
   Args:
@@ -143,14 +147,21 @@ def _post_server(ans: any) -> dict:
             opthub_match = api.match(_question_id)
             trial = opthub_match.submit(ans)
             eval = trial.wait_evaluation()
-            
+
             if eval.evaluation.feasible is False:
                 return MOCK_ERROR_RESPONSE
-            
-            return {'objective': 0.2 if eval.objective.scalar is not None else eval.objective.vector, 'feasible': True}
+
+            return {
+                'objective':
+                0.2 if eval.objective.scalar is not None else
+                eval.objective.vector,
+                'feasible':
+                True
+            }
     except Exception as e:
         logger.error(e)
         return MOCK_ERROR_RESPONSE
+
 
 #
 # 単体テスト

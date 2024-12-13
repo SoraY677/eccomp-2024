@@ -21,7 +21,7 @@ def init(side_num: int) -> Union[Board, None]:
     """
 
     # 実行可能解が現れるまで無限生成
-    while(True):
+    while (True):
         hint_board = Board(side_num)
         hint_max_num = random.randint(0, hint_board.get_item_max())
         empty_indexes = hint_board.get_empty_index()

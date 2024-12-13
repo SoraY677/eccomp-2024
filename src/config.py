@@ -2,7 +2,6 @@
 設定ファイル
 """
 from dotenv import load_dotenv
-from enum import Enum
 from typing import NamedTuple
 import os
 import datetime
@@ -111,8 +110,12 @@ def is_validate_question_id(question_id: str) -> bool:
     """
     return question_id in QUESTION_MAP.keys()
 
-def get_result_file_path(question_id):
-    return f'./data/result-{question_id}-{datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.csv'
+
+def get_result_file_path(question_id: str) -> str:
+    time_str = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
+    return f'./data/result-{question_id}-{time_str}.csv'
+
 
 def get_log_file_path(question_id):
-    return f'./log/{question_id}/log-{question_id}-{datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.log'
+    time_str = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
+    return f'./log/{question_id}/log-{question_id}-{time_str}.log'
