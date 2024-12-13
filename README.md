@@ -17,6 +17,9 @@
 #### 環境変数の設定
 
 ```bash
+# opthub上でAPIキーを生成
+opt create api_key
+
 python ./_tool/copy.py .template.env .env
 ```
 
