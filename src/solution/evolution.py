@@ -26,7 +26,9 @@ def init(side_num: int, hint_pattern: List[int]) -> Union[Board, None]:
         if hint_board.get_item_max() != len(hint_pattern):
             raise ValueError('board item num not equals hint_pattern')
         get_empty_index = hint_board.get_empty_index()
-        hint_pattern_index = [i for i, value in enumerate(hint_pattern) if value == 1]
+        hint_pattern_index = [
+            i for i, value in enumerate(hint_pattern) if value == 1
+        ]
         for index in hint_pattern_index:
             row_i, column_i = get_empty_index[index]
             hint_board.set_item(row_i, column_i, 1)
@@ -42,6 +44,7 @@ def init(side_num: int, hint_pattern: List[int]) -> Union[Board, None]:
 # 単体テスト
 #
 import unittest
+
 
 class Test(unittest.TestCase):
 

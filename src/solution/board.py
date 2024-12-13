@@ -94,7 +94,7 @@ class Board:
             )
             return False
         return True
-    
+
     def get_item(self, row_i: int, column_i: int) -> int:
         return self._list[column_i][row_i].value
 
@@ -109,8 +109,7 @@ class Board:
         Raises:
             None
         """
-        if self._is_index_validation(
-                row_i, column_i) is False:
+        if self._is_index_validation(row_i, column_i) is False:
             ValueError(None)
         self._list[column_i][row_i] = ITEM(value)
 

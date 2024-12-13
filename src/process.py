@@ -52,7 +52,8 @@ def run(question_id: str) -> None:
         logger.info(f"========[{i+1}]========")
 
         # 解算出
-        result = solution.run(POPULATION_MAX, GENERATION_MAX, question_config_item.HINT_PATTERN,
+        result = solution.run(POPULATION_MAX, GENERATION_MAX,
+                              question_config_item.HINT_PATTERN,
                               optimization_pairs)
         # 解提出
         request_obj = {}
