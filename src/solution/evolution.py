@@ -20,7 +20,7 @@ def init(side_num: int) -> Board:
     result = Board(side_num)
     empty_indexes = result.get_empty_index()
     hint_max_num = random.randint(
-        0, result.get_item_max())  # Todo: 後でヒント数の最小は調整してもいいかも
+        result.get_item_max() / 3, result.get_item_max()) # 適当に1/3~でヒント生成(おそらく多い法に倒したほうが実行可能解生まれやすいはず)
     for _ in range(hint_max_num):
         selected_index = random.randint(0, len(empty_indexes) - 1)
         row_i, column_i = empty_indexes.pop(selected_index)
