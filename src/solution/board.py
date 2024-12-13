@@ -184,6 +184,11 @@ class Board:
             result.append([item.value for item in array[i*SINGLE_SIDE_NUM * self._side_num: (i+1)*SINGLE_SIDE_NUM * self._side_num]])
         return result
     
+    def reset_by_table(self, table: List[List[int]]):
+        for column_i in range(len(table)):
+            for row_i in range(len(table[column_i])):
+                self.set_item(row_i, column_i, ITEM(table[column_i][row_i]))
+
     def normalize(self):
         """1次元配列化
         Returns:

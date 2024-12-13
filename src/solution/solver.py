@@ -53,7 +53,6 @@ def _select(optimization_pairs: List[OptimizationPair],
 
 def run(population_max: int,
         generation_max: int,
-        mutation_rate: float,
         optimization_pairs: List[OptimizationPair] = [],
         side_num: int = 3) -> List[Board]:
     """実行
@@ -67,31 +66,22 @@ def run(population_max: int,
     """
     if len(optimization_pairs) <= population_max / 2:
         return [init(side_num) for _ in range(population_max)]
+    print('hoge')
 
+    generated_results: List[OptimizationPair] = []
     for i in range(generation_max):
-        generated_results: List[OptimizationPair] = []
 
         for j in range(population_max):
             sample_individual = _select(optimization_pairs, 1)[0]
-            if mutation_rate < random.random():
-                selected_individual = _select(optimization_pairs)
-                new_board = crossover(selected_individual[0].get_board(),
-                                      selected_individual[1].get_board(),
-                                      random.randint(1, side_num*side_num))
-                score = math.sqrt(
-                    math.pow(
-                        sample_individual.get_evaluation_point() -
-                        calc_score(new_board), 2))
-                generated_results.append(
-                    OptimizationPair(sample_individual.get_board(), score))
-            else:
-                new_board = init(side_num)
-                score = math.sqrt(
-                    math.pow(
-                        sample_individual.get_evaluation_point() -
-                        calc_score(new_board), 2))
-                generated_results.append(OptimizationPair(new_board, score))
+            new_board = init(side_num)
+            score = math.sqrt(
+                math.pow(
+                    sample_individual.get_evaluation_point() -
+                    calc_score(new_board), 2))
+            generated_results.append(OptimizationPair(new_board, score))
     results = []
-    for result in generated_results:
+    generated_results.sort(key=lambda result: result.get_evaluation_point())
+    print(generated_results)
+    for result in generated_results[0:population_max]:
         results.append(result.get_board())
     return results

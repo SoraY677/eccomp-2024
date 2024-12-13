@@ -1,4 +1,5 @@
 import random
+from typing import Union
 from os import path
 import sys
 if __name__ == "__main__":
@@ -6,9 +7,10 @@ if __name__ == "__main__":
 else:
     sys.path.append(path.join(path.dirname(__file__), '..'))
 from board import Board
+from board_generator import custom_generate
 
 
-def init(side_num: int) -> Board:
+def init(side_num: int) -> Union[Board, None]:
     """初期解生成
 
     Args:
@@ -17,18 +19,21 @@ def init(side_num: int) -> Board:
     Returns:
         Board: 生成した盤面
     """
+
+    # 実行可能解が現れるまで無限生成
+    while(True):
+        hint_board = Board(side_num)
+        hint_max_num = random.randint(0, hint_board.get_item_max())
+        empty_indexes = hint_board.get_empty_index()
+        for _ in range(hint_max_num):
+            selected_index = random.randint(0, len(empty_indexes) - 1)
+            row_i, column_i = empty_indexes.pop(selected_index)
+            hint_board.set_item(row_i, column_i, 1)
+        generated_table = custom_generate(hint_board.create_table())
+        if generated_table is not None:
+            break
     result = Board(side_num)
-    empty_indexes = result.get_empty_index()
-    hint_max_num = random.randint(
-        round(result.get_item_max() / 3), result.get_item_max()) # 適当に1/3~でヒント生成(おそらく多い法に倒したほうが実行可能解生まれやすいはず)
-    for _ in range(hint_max_num):
-        selected_index = random.randint(0, len(empty_indexes) - 1)
-        row_i, column_i = empty_indexes.pop(selected_index)
-        setable_nums = result.get_setable_item_value(
-            row_i, column_i)  # Todo: 0になるパターンがあるため考えてもいいかも
-        if len(setable_nums) > 0:
-            item = setable_nums[random.randint(0, len(setable_nums) - 1)]
-            result.set_item(row_i, column_i, item)
+    result.reset_by_table(generated_table)
     return result
 
 
