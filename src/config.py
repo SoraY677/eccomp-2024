@@ -113,3 +113,6 @@ def is_validate_question_id(question_id: str) -> bool:
 
 def get_result_file_path(question_id):
     return f'./data/result-{question_id}-{datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.csv'
+
+def get_log_file_path(question_id):
+    return f'./log/{question_id}/log-{question_id}-{datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.log'

@@ -1,10 +1,11 @@
 from util import logger
 from typing import List
-from config import POPULATION_MAX, GENERATION_MAX, MUTATION_RATE, get_question_config_item, get_result_file_path
+from config import POPULATION_MAX, GENERATION_MAX, MUTATION_RATE, get_question_config_item, get_log_file_path, get_result_file_path
 import solution
 import math
 from transmission import submition
 from solution import OptimizationPair
+import logging
 
 
 def exec(api_key: str, question_id: str) -> None:
@@ -23,7 +24,7 @@ def init(api_key: str, question_id: str) -> None:
   Args:
       question_id (str): 問題ID
   """
-    logger.init()
+    logger.init(get_log_file_path(question_id), logging.INFO)
     logger.info(f'Selected Question: {question_id}')
 
     question_config_item = get_question_config_item(question_id)

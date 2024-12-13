@@ -21,9 +21,9 @@ def _write_new(file_path: str, content: dict):
         file_path (str): ファイルパス
         content (dict): 記載内容
     """
-    directory = os.path.dirname(file_path)
-    if not os.path.exists(directory):
-        os.makedirs(directory)
+    dir_path = os.path.dirname(file_path)
+    if not os.path.exists(dir_path):
+        os.makedirs(dir_path)
     with open(file_path, 'w', newline='') as f:
         writer = csv.writer(f)
         writer.writerows([list(content.keys()), list(content.values())])
