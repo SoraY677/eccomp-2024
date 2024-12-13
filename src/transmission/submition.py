@@ -3,12 +3,11 @@
 """
 from os import path
 import sys
-import json
-import subprocess
 from const import QuestionType, get_mock_single_response, get_mock_mutli_response, MOCK_ERROR_RESPONSE
 from data import write
 import random
 from typing import Union
+from opthub_client.api import OptHub
 
 if __name__ == "__main__":
     sys.path.append('..')
@@ -93,11 +92,11 @@ def _is_inited(question_id, submit_max, question_type):
     return True
 
 
-def _exec_process(ans: dict):
+def _exec_process(ans: any):
     """送信コマンド実行
 
   Args:
-      ans (dict): 解答オブジェクト
+      ans (any): 解答オブジェクト
 
   Returns:
       dict: 実行結果
@@ -127,11 +126,11 @@ def _get_mock() -> dict:
     return MOCK_ERROR_RESPONSE
 
 
-def _post_server(ans: dict) -> dict:
+def _post_server(ans: any) -> dict:
     """サーバへの提出
 
     Args:
-        ans (dict): リクエスト内容
+        ans (any): 解答
 
     Returns:
         dict: 結果
@@ -139,39 +138,19 @@ def _post_server(ans: dict) -> dict:
     global _api_key
     global _question_id
     try:
-        command = [
-            "curl", "-X", "POST",
-            f"https://api.opthub.ai/matches/{_question_id}/trials", "-H",
-            "Content-Type: application/json", "-H", f"x-api-key: {_api_key}",
-            "-d",
-            json.dumps(ans)
-        ]
-        process = subprocess.Popen(command,
-                                   stdout=subprocess.PIPE,
-                                   stderr=subprocess.STDOUT,
-                                   shell=True)
-        return _decode_response(process.communicate()[0])
+        # 参考実装: https://opthub.notion.site/OptHub-API-e35cc47419054d6b8723180b27405c49
+        with OptHub(_api_key) as api:
+            opthub_match = api.match(_question_id)
+            trial = opthub_match.submit(ans)
+            eval = trial.wait_evaluation()
+            
+            if eval.evaluation.feasible is False:
+                return MOCK_ERROR_RESPONSE
+            
+            return {'objective': 0.2 if eval.objective.scalar is not None else eval.objective.vector, 'feasible': True}
     except Exception as e:
         logger.error(e)
         return MOCK_ERROR_RESPONSE
-
-
-def _decode_response(response_txt):
-    """レスポンスのデコード
-
-    Args:
-        response_txt (string): レスポンス内容文字列 
-
-    Returns:
-        dict: レスポンス内容の辞書型
-    """
-    try:
-        decoded_response = json.loads(response_txt)
-        logger.info(f'response: {decoded_response}')
-        return decoded_response
-    except Exception as e:
-        raise e
-
 
 #
 # 単体テスト

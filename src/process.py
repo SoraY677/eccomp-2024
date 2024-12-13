@@ -1,6 +1,6 @@
 from util import logger
 from typing import List
-from config import POPULATION_MAX, GENERATION_MAX, MUTATION_RATE, get_question_config_item, get_log_file_path, get_result_file_path
+from config import POPULATION_MAX, GENERATION_MAX, get_question_config_item, get_log_file_path, get_result_file_path
 import solution
 import math
 from transmission import submition
@@ -52,13 +52,13 @@ def run(question_id: str) -> None:
         logger.info(f"========[{i+1}]========")
 
         # 解算出
-        result = solution.run(POPULATION_MAX, GENERATION_MAX, MUTATION_RATE,
+        result = solution.run(POPULATION_MAX, GENERATION_MAX,
                               optimization_pairs)
         # 解提出
         request_obj = {}
         for i in range(len(result)):
             board = result[i]
-            request_obj[i] = _generate_ans_dict(board.normalize())
+            request_obj[i] = board.normalize()
 
         logger.info(request_obj)
         responses = submition.submit(request_obj)
@@ -88,14 +88,3 @@ def run(question_id: str) -> None:
             POPULATION_MAX if len(optimize_responses) > POPULATION_MAX else 0
         ):len(optimize_responses)]
 
-
-def _generate_ans_dict(array: List[int]) -> dict:
-    """リクエスト用オブジェクト作成
-
-    Args:
-        array (list[int]): 解答
-
-    Returns:
-        dict: リクエスト用オブジェクト
-    """
-    return {"variable": array}
