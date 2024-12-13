@@ -66,7 +66,6 @@ def run(population_max: int,
     """
     if len(optimization_pairs) <= population_max / 2:
         return [init(side_num) for _ in range(population_max)]
-    print('hoge')
 
     generated_results: List[OptimizationPair] = []
     for i in range(generation_max):
@@ -81,7 +80,6 @@ def run(population_max: int,
             generated_results.append(OptimizationPair(new_board, score))
     results = []
     generated_results.sort(key=lambda result: result.get_evaluation_point())
-    print(generated_results)
     for result in generated_results[0:population_max]:
         results.append(result.get_board())
     return results
