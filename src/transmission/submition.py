@@ -153,10 +153,10 @@ def _post_server(ans: any) -> dict:
 
             return {
                 'objective':
-                0.2 if eval.objective.scalar is not None else
+                eval.objective.scalar if eval.objective.scalar is not None else
                 eval.objective.vector,
                 'feasible':
-                True
+                eval.feasible
             }
     except Exception as e:
         logger.error(e)
