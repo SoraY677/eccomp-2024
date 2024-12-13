@@ -66,19 +66,26 @@ def _search_and_calc_evalutaion_point(
     current_search_from_end_index = search_from_end_index
     result = 0
     for _ in range(line_num * line_num):
-        # 2点間の相違があるか調査し、差があればマンハッタン距離を加算
-        has_item_from_start = board.has_item(
+        # 2点間の相違があるか調査し、差があればマンハッタン距離*数値量の差を加算
+        item_from_start = board.get_item(
             current_search_from_start_index[0],
             current_search_from_start_index[1])
-        has_item_from_end = board.has_item(current_search_from_end_index[0],
+        item_from_end = board.get_item(current_search_from_end_index[0],
                                            current_search_from_end_index[1])
-        if has_item_from_start is not has_item_from_end:
-            result += math.sqrt(
-                math.pow(
-                    current_search_from_start_index[0] -
-                    round((line_num - 1) / 2), 2) + math.pow(
-                        current_search_from_start_index[1] -
-                        round((line_num - 1) / 2), 2))
+        result += math.sqrt(
+            math.pow(
+                math.sqrt(
+                    math.pow(
+                        current_search_from_start_index[0] - round((line_num - 1) / 2), 2
+                    )
+                ) * item_from_start 
+                - math.sqrt(
+                    math.pow(
+                        current_search_from_start_index[1] -round((line_num - 1) / 2),2
+                    ) * item_from_end
+                )
+            , 2)
+        )
         current_search_from_start_index = (
             current_search_from_start_index[0] + 1,
             current_search_from_start_index[1]

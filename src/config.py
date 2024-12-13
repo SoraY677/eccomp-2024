@@ -104,9 +104,8 @@ def get_question_config_item(question_id: str) -> QuestionConfigItem:
     return QUESTION_MAP[question_id]
 
 
-POPULATION_MAX = 10  # 10個体
-GENERATION_MAX = 100  # 100回進化
-MUTATION_RATE = 0.05  # 突然変異率
+POPULATION_MAX = 10  # 個体数
+GENERATION_MAX = 5  # １評価の回数
 
 
 def is_validate_question_id(question_id: str) -> bool:

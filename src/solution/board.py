@@ -94,6 +94,9 @@ class Board:
             )
             return False
         return True
+    
+    def get_item(self, row_i: int, column_i: int) -> int:
+        return self._list[column_i][row_i].value
 
     def set_item(self, row_i: int, column_i: int, value: int) -> None:
         """盤面の指定箇所に数値設定
