@@ -13,7 +13,7 @@ _logger = None
 _log_func = {}
 
 
-def init(dirpath=None, level=logging.DEBUG):
+def init(filepath: str='', level=logging.DEBUG):
     """初期化
 
     Args:
@@ -21,13 +21,12 @@ def init(dirpath=None, level=logging.DEBUG):
         level (string, optional): ログレベル. Defaults to logging.DEBUG.
     """
     _logger = logging.getLogger("main")
-    if dirpath is None:
-        filepath = None
+    if filepath == '':
         handler = logging.StreamHandler()
     else:
-        if os.path.isdir(dirpath) is False:
-            os.makedirs(dirpath)
-        filepath = os.path.join(dirpath, "main.log")
+        dir_path = os.path.dirname(filepath)
+        if not os.path.exists(dir_path):
+            os.makedirs(dir_path)
         handler = logging.FileHandler(filepath)
     handler.setLevel(level)
     handler.setFormatter(logging.Formatter(FORMAT))
