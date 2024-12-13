@@ -67,20 +67,39 @@ def _search_and_calc_evalutaion_point(
     result = 0
     for _ in range(line_num * line_num):
         # 2点間の相違があるか調査し、差があればマンハッタン距離*数値量の差を加算
+        has_item_from_start = board.has_item(
+            current_search_from_start_index[0],
+            current_search_from_start_index[1])
+        has_item_from_end = board.has_item(current_search_from_end_index[0],
+                                           current_search_from_end_index[1])
         item_from_start = board.get_item(current_search_from_start_index[0],
                                          current_search_from_start_index[1])
         item_from_end = board.get_item(current_search_from_end_index[0],
                                        current_search_from_end_index[1])
-        result += math.sqrt(
-            math.pow(
-                math.sqrt(
-                    math.pow(
-                        current_search_from_start_index[0] - round(
-                            (line_num - 1) / 2), 2)) * item_from_start -
-                math.sqrt(
-                    math.pow(
-                        current_search_from_start_index[1] - round(
-                            (line_num - 1) / 2), 2) * item_from_end), 2))
+        if has_item_from_start is False and has_item_from_end is False:
+            pass
+        elif has_item_from_start is True and has_item_from_end is False:
+            result += math.sqrt(
+                math.pow(
+                    current_search_from_start_index[0] - round(
+                        (line_num - 1) / 2), 2) + math.pow(
+                            current_search_from_start_index[1] - round(
+                                (line_num - 1) / 2), 2)) * item_from_start
+        elif has_item_from_start is False and has_item_from_end is True:
+            result += math.sqrt(
+                math.pow(
+                    current_search_from_end_index[0] - round(
+                        (line_num - 1) / 2), 2) + math.pow(
+                            current_search_from_end_index[1] - round(
+                                (line_num - 1) / 2), 2)) * item_from_start
+        else:
+            result += math.sqrt(
+                math.pow(
+                    current_search_from_start_index[0] -
+                    current_search_from_end_index[0], 2) + math.pow(
+                        current_search_from_end_index[1] -
+                        current_search_from_end_index[1], 2)) * math.sqrt(
+                            math.pow(item_from_start - item_from_end, 2))
         current_search_from_start_index = (
             current_search_from_start_index[0] + 1,
             current_search_from_start_index[1]
