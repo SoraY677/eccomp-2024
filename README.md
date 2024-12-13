@@ -17,6 +17,9 @@
 #### 環境変数の設定
 
 ```bash
+# opthub上でAPIキーを生成
+opt create api_key
+
 python ./_tool/copy.py .template.env .env
 ```
 
@@ -24,15 +27,15 @@ python ./_tool/copy.py .template.env .env
 
 <summary>環境変数の設定項目一覧</summary>
 
-|           変数名           |          概要           |                           関連リンク                            |
-| :------------------------: | :---------------------: | :-------------------------------------------------------------: |
-|       ECCOMP_API_KEY       |   OPTHUB の API キー    |                                                                 |
-| SINGLE_OBJECTIVE_1_API_KEY | 単目的部門１の API キー | https://opthub.ai/ja/competitions/eccomp2024/single-objective-1 |
-| SINGLE_OBJECTIVE_2_API_KEY | 単目的部門２の API キー | https://opthub.ai/ja/competitions/eccomp2024/single-objective-2 |
-| SINGLE_OBJECTIVE_3_API_KEY | 単目的部門３の API キー | https://opthub.ai/ja/competitions/eccomp2024/single-objective-3 |
-| MULTI_OBJECTIVE_1_API_KEY  | 多目的部門１の API キー | https://opthub.ai/ja/competitions/eccomp2024/multi-objective-1  |
-| MULTI_OBJECTIVE_2_API_KEY  | 多目的部門２の API キー | https://opthub.ai/ja/competitions/eccomp2024/multi-objective-2  |
-| MULTI_OBJECTIVE_3_API_KEY  | 多目的部門３の API キー | https://opthub.ai/ja/competitions/eccomp2024/multi-objective-3  |
+|           変数名           |          概要           |                               関連リンク                               |
+| :------------------------: | :---------------------: | :--------------------------------------------------------------------: |
+|       ECCOMP_API_KEY       |   OPTHUB の API キー    | https://opthub.notion.site/OptHub-API-e35cc47419054d6b8723180b27405c49 |
+| SINGLE_OBJECTIVE_1_API_KEY | 単目的部門１の API キー |    https://opthub.ai/ja/competitions/eccomp2024/single-objective-1     |
+| SINGLE_OBJECTIVE_2_API_KEY | 単目的部門２の API キー |    https://opthub.ai/ja/competitions/eccomp2024/single-objective-2     |
+| SINGLE_OBJECTIVE_3_API_KEY | 単目的部門３の API キー |    https://opthub.ai/ja/competitions/eccomp2024/single-objective-3     |
+| MULTI_OBJECTIVE_1_API_KEY  | 多目的部門１の API キー |     https://opthub.ai/ja/competitions/eccomp2024/multi-objective-1     |
+| MULTI_OBJECTIVE_2_API_KEY  | 多目的部門２の API キー |     https://opthub.ai/ja/competitions/eccomp2024/multi-objective-2     |
+| MULTI_OBJECTIVE_3_API_KEY  | 多目的部門３の API キー |     https://opthub.ai/ja/competitions/eccomp2024/multi-objective-3     |
 
 </details>
 
@@ -51,11 +54,15 @@ python ./src/main.py {questionId}
   - `m-1`: 多目的部門-1
   - `m-2`: 多目的部門-2
   - `m-3`: 多目的部門-3
-  - `x-1`: モック
+  - `s-x`: 単目的部門-モック
+  - `m-x`: 多目的部門-モック
 
 #### その他
 
 ```bash
+# 単体全実行
+python -m unittest discover -s ./src/ -p "*.py"
+
 # コードフォーマット
 yapf -i --recursive .
 ```
