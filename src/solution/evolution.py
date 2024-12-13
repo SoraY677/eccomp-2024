@@ -1,5 +1,5 @@
 import random
-from typing import Union
+from typing import Union, List
 from os import path
 import sys
 if __name__ == "__main__":
@@ -10,7 +10,7 @@ from board import Board
 from board_generator import custom_generate
 
 
-def init(side_num: int) -> Union[Board, None]:
+def init(side_num: int, hint_pattern: List[int]) -> Union[Board, None]:
     """初期解生成
 
     Args:
@@ -23,11 +23,13 @@ def init(side_num: int) -> Union[Board, None]:
     # 実行可能解が現れるまで無限生成
     while (True):
         hint_board = Board(side_num)
-        hint_max_num = random.randint(0, hint_board.get_item_max())
-        empty_indexes = hint_board.get_empty_index()
-        for _ in range(hint_max_num):
-            selected_index = random.randint(0, len(empty_indexes) - 1)
-            row_i, column_i = empty_indexes.pop(selected_index)
+        if hint_board.get_item_max() != len(hint_pattern):
+            raise ValueError('board item num not equals hint_pattern')
+        get_empty_index = hint_board.get_empty_index()
+        hint_pattern_index = [i for i, value in enumerate(hint_pattern) if value == 1]
+        selected_hint_pattern_index = random.choices(hint_pattern_index, k=random.randint(0, len(hint_pattern_index)), weights= [1] * len(hint_pattern_index))
+        for index in selected_hint_pattern_index:
+            row_i, column_i = get_empty_index[index]
             hint_board.set_item(row_i, column_i, 1)
         generated_table = custom_generate(hint_board.create_table())
         if generated_table is not None:

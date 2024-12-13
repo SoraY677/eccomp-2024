@@ -4,7 +4,7 @@
 
 from board import Board
 from typing import List
-from evolution import init, crossover
+from evolution import init
 import random
 from optimizer import calc_score
 import math
@@ -53,6 +53,7 @@ def _select(optimization_pairs: List[OptimizationPair],
 
 def run(population_max: int,
         generation_max: int,
+        hint_pattern: List[int],
         optimization_pairs: List[OptimizationPair] = [],
         side_num: int = 3) -> List[Board]:
     """実行
@@ -65,14 +66,14 @@ def run(population_max: int,
         list[list[int]]: 計算結果
     """
     if len(optimization_pairs) <= population_max / 2:
-        return [init(side_num) for _ in range(population_max)]
+        return [init(side_num, hint_pattern) for _ in range(population_max)]
 
     generated_results: List[OptimizationPair] = []
     for i in range(generation_max):
 
         for j in range(population_max):
             sample_individual = _select(optimization_pairs, 1)[0]
-            new_board = init(side_num)
+            new_board = init(side_num, hint_pattern)
             score = math.sqrt(
                 math.pow(
                     sample_individual.get_evaluation_point() -

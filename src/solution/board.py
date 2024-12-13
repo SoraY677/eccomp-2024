@@ -107,9 +107,8 @@ class Board:
             None
         """
         if self._is_index_validation(
-                row_i, column_i) is False or self._is_value_set_validation(
-                    row_i, column_i) is False:
-            raise None
+                row_i, column_i) is False:
+            ValueError(None)
         self._list[column_i][row_i] = ITEM(value)
 
     def has_item(self, row_i: int, column_i: int) -> bool:

@@ -2,7 +2,7 @@
 設定ファイル
 """
 from dotenv import load_dotenv
-from typing import NamedTuple
+from typing import NamedTuple, List
 import os
 import datetime
 from transmission.const import QuestionType
@@ -20,6 +20,7 @@ class QuestionConfigItem(NamedTuple):
     SUBMIT_MAX: int
     QUESTION_TYPE: QuestionType
     IS_MOCK: bool
+    HINT_PATTERN: List[int]
 
 
 QUESTION_MAP: dict = {
@@ -29,50 +30,59 @@ QUESTION_MAP: dict = {
     QuestionConfigItem(ID=os.getenv('SINGLE_OBJECTIVE_1_API_KEY'),
                        SUBMIT_MAX=30000,
                        QUESTION_TYPE=QuestionType.SINGLE,
-                       IS_MOCK=False),
+                       IS_MOCK=False,
+                       HINT_PATTERN=[1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1]),
     # https://opthub.ai/ja/competitions/eccomp2024/single-objective-2
     f"{SOLVE_SINGLE_PREFIX}-2":
     QuestionConfigItem(ID=os.getenv('SINGLE_OBJECTIVE_2_API_KEY'),
                        SUBMIT_MAX=30000,
                        QUESTION_TYPE=QuestionType.SINGLE,
-                       IS_MOCK=False),
+                       IS_MOCK=False,
+                       HINT_PATTERN=[1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1]),
     # https://opthub.ai/ja/competitions/eccomp2024/single-objective-3
     f"{SOLVE_SINGLE_PREFIX}-3":
     QuestionConfigItem(ID=os.getenv('SINGLE_OBJECTIVE_3_API_KEY'),
                        SUBMIT_MAX=30000,
                        QUESTION_TYPE=QuestionType.SINGLE,
-                       IS_MOCK=False),
+                       IS_MOCK=False,
+                       HINT_PATTERN=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
     # mock
     f"{SOLVE_SINGLE_PREFIX}-x":
     QuestionConfigItem(ID="XXX",
                        SUBMIT_MAX=100,
                        QUESTION_TYPE=QuestionType.SINGLE,
-                       IS_MOCK=True),
+                       IS_MOCK=True,
+                       HINT_PATTERN=[1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1]
+                       ),
     ### 多目的
     # https://opthub.ai/ja/competitions/eccomp2024/multi-objective-1
     f"{SOLVE_MULTI_PREFIX}-1":
     QuestionConfigItem(ID=os.getenv('MULTI_OBJECTIVE_1_API_KEY'),
                        SUBMIT_MAX=10000,
                        QUESTION_TYPE=QuestionType.MULTI,
-                       IS_MOCK=False),
+                       IS_MOCK=False,
+                       HINT_PATTERN=[1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1]),
     # https://opthub.ai/ja/competitions/eccomp2024/multi-objective-2
     f"{SOLVE_MULTI_PREFIX}-2":
     QuestionConfigItem(ID=os.getenv('MULTI_OBJECTIVE_2_API_KEY'),
                        SUBMIT_MAX=10000,
                        QUESTION_TYPE=QuestionType.MULTI,
-                       IS_MOCK=False),
+                       IS_MOCK=False,
+                       HINT_PATTERN=[1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1]),
     # https://opthub.ai/ja/competitions/eccomp2024/multi-objective-3
     f"{SOLVE_MULTI_PREFIX}-3":
     QuestionConfigItem(ID=os.getenv('MULTI_OBJECTIVE_3_API_KEY'),
                        SUBMIT_MAX=10000,
                        QUESTION_TYPE=QuestionType.MULTI,
-                       IS_MOCK=False),
+                       IS_MOCK=False,
+                       HINT_PATTERN=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
     # mock
     f"{SOLVE_MULTI_PREFIX}-x":
     QuestionConfigItem(ID="XXX",
                        SUBMIT_MAX=100,
                        QUESTION_TYPE=QuestionType.MULTI,
-                       IS_MOCK=True)
+                       IS_MOCK=True,
+                       HINT_PATTERN=[1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1])
 }
 
 
@@ -89,7 +99,7 @@ def get_question_config_item(question_id: str) -> QuestionConfigItem:
         QuestionConfigItem: 設定情報
     """
     if question_id not in QUESTION_MAP:
-        raise None
+        raise ValueError(None)
 
     return QUESTION_MAP[question_id]
 
