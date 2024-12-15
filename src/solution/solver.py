@@ -70,7 +70,6 @@ def run(population_max: int,
 
     generated_results: List[OptimizationPair] = []
     for i in range(generation_max):
-
         for j in range(population_max):
             sample_individual = _select(optimization_pairs, 1)[0]
             new_board = init(side_num, hint_pattern)

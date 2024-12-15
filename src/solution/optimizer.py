@@ -1,4 +1,3 @@
-
 import math
 
 from board import Board
@@ -21,9 +20,11 @@ def calc_score(board: Board) -> float:
             for categorized_i2 in range(categorized_i1, len(categorized_list)):
                 categorized_list[categorized_i1]
                 result += math.sqrt(
-                    math.pow(categorized_list[categorized_i1][0] - categorized_list[categorized_i2][0], 2) + 
-                    math.pow(categorized_list[categorized_i1][1] - categorized_list[categorized_i2][1], 2)
-                )
+                    math.pow(
+                        categorized_list[categorized_i1][0] -
+                        categorized_list[categorized_i2][0], 2) + math.pow(
+                            categorized_list[categorized_i1][1] -
+                            categorized_list[categorized_i2][1], 2))
     return result
 
 

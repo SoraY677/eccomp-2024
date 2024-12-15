@@ -85,9 +85,9 @@ def run(question_id: str) -> None:
                 result[index], solution.calc_score(result[index]))
             optimization_pairs.append(optimization_pair)
             optimize_responses.append(optimization_pair)
-            logger.info(f"{response[0]}:{optimization_pair.get_evaluation_point()}")
+            logger.info(
+                f"{response[0]}:{optimization_pair.get_evaluation_point()}")
         optimize_responses = optimize_responses[(
             len(optimize_responses) -
             POPULATION_MAX if len(optimize_responses) > POPULATION_MAX else 0
         ):len(optimize_responses)]
-        
