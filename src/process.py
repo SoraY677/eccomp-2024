@@ -78,13 +78,16 @@ def run(question_id: str) -> None:
 
         # 実際に評価が高いものに独自評価を紐づける
         optimization_pairs = []
-        for response in sorted_reponse:
+        for response_i in range(len(sorted_reponse)):
+            response = sorted_reponse[response_i]
             index = response[0]
             optimization_pair = OptimizationPair(
                 result[index], solution.calc_score(result[index]))
             optimization_pairs.append(optimization_pair)
             optimize_responses.append(optimization_pair)
+            logger.info(f"{response[0]}:{optimization_pair.get_evaluation_point()}")
         optimize_responses = optimize_responses[(
             len(optimize_responses) -
             POPULATION_MAX if len(optimize_responses) > POPULATION_MAX else 0
         ):len(optimize_responses)]
+        
