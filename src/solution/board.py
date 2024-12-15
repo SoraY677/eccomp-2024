@@ -205,6 +205,21 @@ class Board:
             for item in list(itertools.chain.from_iterable(self._list))
         ]
 
+    def hist(self) -> dict[ITEM, list[tuple[int]]] :
+        """マスごとの値で分類
+
+        Returns:
+            dict[ITEM, list[tuple[int]]]: 分類後の各配列
+        """
+        result: dict[ITEM, list[tuple[int]]] = {k: [] for k in ITEM if  k != ITEM.UNKOWN}
+        for column_i in range(len(self._list)):
+            for row_i in range(len(self._list[column_i])):
+                if self._list[column_i][row_i] == ITEM.UNKOWN:
+                    continue
+                result[self._list[column_i][row_i]].append((row_i, column_i))
+
+        return result
+
     def get_item_max(self) -> int:
         """マス数を取得
 
