@@ -28,7 +28,7 @@ QUESTION_MAP: dict = {
     # https://opthub.ai/ja/competitions/eccomp2024/single-objective-1
     f"{SOLVE_SINGLE_PREFIX}-1":
     QuestionConfigItem(ID=os.getenv('SINGLE_OBJECTIVE_1_API_KEY'),
-                       SUBMIT_MAX=30000,
+                       SUBMIT_MAX=10000,
                        QUESTION_TYPE=QuestionType.SINGLE,
                        IS_MOCK=False,
                        HINT_PATTERN=[
@@ -41,7 +41,7 @@ QUESTION_MAP: dict = {
     # https://opthub.ai/ja/competitions/eccomp2024/single-objective-2
     f"{SOLVE_SINGLE_PREFIX}-2":
     QuestionConfigItem(ID=os.getenv('SINGLE_OBJECTIVE_2_API_KEY'),
-                       SUBMIT_MAX=30000,
+                       SUBMIT_MAX=10000,
                        QUESTION_TYPE=QuestionType.SINGLE,
                        IS_MOCK=False,
                        HINT_PATTERN=[
@@ -54,7 +54,7 @@ QUESTION_MAP: dict = {
     # https://opthub.ai/ja/competitions/eccomp2024/single-objective-3
     f"{SOLVE_SINGLE_PREFIX}-3":
     QuestionConfigItem(ID=os.getenv('SINGLE_OBJECTIVE_3_API_KEY'),
-                       SUBMIT_MAX=30000,
+                       SUBMIT_MAX=10000,
                        QUESTION_TYPE=QuestionType.SINGLE,
                        IS_MOCK=False,
                        HINT_PATTERN=[
@@ -81,7 +81,7 @@ QUESTION_MAP: dict = {
     # https://opthub.ai/ja/competitions/eccomp2024/multi-objective-1
     f"{SOLVE_MULTI_PREFIX}-1":
     QuestionConfigItem(ID=os.getenv('MULTI_OBJECTIVE_1_API_KEY'),
-                       SUBMIT_MAX=10000,
+                       SUBMIT_MAX=30000,
                        QUESTION_TYPE=QuestionType.MULTI,
                        IS_MOCK=False,
                        HINT_PATTERN=[
@@ -94,7 +94,7 @@ QUESTION_MAP: dict = {
     # https://opthub.ai/ja/competitions/eccomp2024/multi-objective-2
     f"{SOLVE_MULTI_PREFIX}-2":
     QuestionConfigItem(ID=os.getenv('MULTI_OBJECTIVE_2_API_KEY'),
-                       SUBMIT_MAX=10000,
+                       SUBMIT_MAX=30000,
                        QUESTION_TYPE=QuestionType.MULTI,
                        IS_MOCK=False,
                        HINT_PATTERN=[
@@ -107,7 +107,7 @@ QUESTION_MAP: dict = {
     # https://opthub.ai/ja/competitions/eccomp2024/multi-objective-3
     f"{SOLVE_MULTI_PREFIX}-3":
     QuestionConfigItem(ID=os.getenv('MULTI_OBJECTIVE_3_API_KEY'),
-                       SUBMIT_MAX=10000,
+                       SUBMIT_MAX=30000,
                        QUESTION_TYPE=QuestionType.MULTI,
                        IS_MOCK=False,
                        HINT_PATTERN=[
