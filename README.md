@@ -60,7 +60,7 @@ python ./src/main.py {questionId}
 #### その他
 
 ```bash
-# 単体全実行
+# 単体テスト全実行
 python -m unittest discover -s ./src/ -p "*.py"
 
 # コードフォーマット
